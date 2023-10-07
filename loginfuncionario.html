@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Error 404</title>
+    <title>Contacto</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -36,7 +36,7 @@
                         <a href="about.html" class="nav-item nav-link">¿Quienes somos?</a>
                         <a href="servicios.html" class="nav-item nav-link">Servicios</a>
                         <a href="contacto.html" class="nav-item nav-link">Contáctanos</a>
-                        <a href="login.html" class="nav-item nav-link">Iniciar sesión</a>
+                        <a href="login.html" class="nav-item nav-link active">Iniciar sesión</a>
                     </div>
                     <a href="index.html#buscarpedido" class="btn btn-dark py-2 px-4 d-none d-lg-inline-block">Buscá tu pedido</a>
                 </div>
@@ -46,26 +46,40 @@
 
     <div class="container-fluid bg-primary hero-header mb-5">
         <div class="container text-center">
-            <h1 class="display-4 text-white mb-3 animated slideInDown">404 Error</h1>
+            <h1 class="display-4 text-white mb-3 animated slideInDown">Iniciar sesión <br>Funcionario</h1>
         </div>
     </div>
 
-    <div class="container-fluid py-5 wow fadeIn" data-wow-delay="0.1s">
-        <div class="container text-center">
-            <div class="row justify-content-center">
-                <div class="col-lg-6">
-                    <i class="bi bi-exclamation-triangle display-1 text-primary"></i>
-                    <h1 class="display-1">404</h1>
-                    <h1 class="mb-4">Página no disponible</h1>
-                    <p class="mb-4">Lo sentimos, la página que estás buscando no existe en nuestro sitio.</p>
-                    <a class="btn btn-primary py-2 px-4" href="">Ir al inicio</a>
+    <div class="container-fluid py-5">
+        <div class="container">
+            <div class="mx-auto text-center wow fadeIn" data-wow-delay="0.1s" style="max-width: 600px;">
+                    <div class="wow fadeIn" data-wow-delay="0.3s">
+                        <form>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="name" placeholder="Your Name">
+                                        <label for="name">Correo</label>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="form-floating">
+                                        <input type="password" class="form-control" id="passwordInput" placeholder="Subject">
+                                        <label for="subject">Contraseña</label>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <button class="btn btn-primary w-100 py-3" type="submit">Iniciar sesión</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="container-fluid newsletter bg-primary py-5 my-5">
-    </div>
+    <div class="container-fluid newsletter bg-primary py-5 my-5"></div>
 
     <div class="container-fluid bg-white footer">
         <div class="container py-5">
@@ -128,4 +142,5 @@
     <script src="lib/owlcarousel/owl.carousel.min.js"></script>
     <script src="js/main.js"></script>
 </body>
+
 </html>
