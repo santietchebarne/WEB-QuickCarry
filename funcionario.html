@@ -96,6 +96,37 @@
 
     <script>
         $(document).ready(function () {
+            // Habilita el Datepicker en el campo de fecha
+            $("#Fecha").datepicker({
+                dateFormat: 'dd/mm/yy', // Formato de fecha personalizado
+                minDate: 0, // Asegura que solo se permitan fechas futuras
+                showTime: true, // Habilita la selección de hora
+                controlType: 'select', // Utiliza un selector de tiempo
+                timeFormat: 'HH:mm', // Formato de hora (24 horas)
+                stepMinute: 15 // Intervalo de minutos en el selector de tiempo
+            });
+
+            // Agrega una función de validación personalizada para asegurarse de que la fecha sea futura
+            $("#Fecha").on("change", function () {
+                var selectedDate = $(this).datepicker('getDate');
+                var currentDate = new Date();
+                currentDate.setMinutes(currentDate.getMinutes() + 15); // Añade 15 minutos para asegurarse de que la hora actual sea válida
+
+                if (selectedDate < currentDate) {
+                    alert("La fecha debe ser futura.");
+                    $(this).val(""); // Limpia el campo de fecha si no es válido
+                }
+            });
+        });
+    </script>
+
+
+
+
+
+
+    <script>
+        $(document).ready(function () {
             var localidadesPorDepartamento = {
                 "Artigas": ["Artigas", "Bella Unión", "Baltasar Brum", "Bernabé Rivera", "Colonia Palma", "Montes Quintela", "Paso Cmpamento", "Sequeira", "Tomás Gomensoro"],
                 "Canelones": ["Atlántida", "Barra de Carrasco", "Canelones", "Ciudad de la Costa", "Colonia Nicolich", "La Paz", "Las Piedras", "Pando", "Paso Carrasco", "Santa Lucía"],
@@ -109,6 +140,13 @@
                 "Montevideo": ["Abayubá", "Montevideo", "Montevideo Rural", "Pajas Blancas", "Santiago Vázquez"],
                 "Paysandú": ["Barrio Norte", "Guichón", "Nuevo Paysandú", "Paysandú", "Porvenir", "Piedras Coloradas", "Quebracho", "Tambores"],
                 "Río Negro": ["Algorta", "Bellaco", "El Ombú", "General Borges", "Fray Bentos", "Los Arrayanes", "Las Cañas", "Menafra", "Nuevo Berlín", "Paso de los Mellizos", "San Javier", "Sarandí de Navarro", "Villa María", "Young"],
+                "Rivera": ["La Pedrera", "Masoller", "Minas de Corrales", "Rivera", "Santa Teresa", "Tranqueras", "Vichadero"],
+                "Rocha": ["Chuy", "Castillos", "Lascano", "La Paloma"],
+                "Salto": ["Albisu", "Colonia 18 de Julio", "Colonia Itapebí", "Constitución", "Fernández", "Pueblo Lavalleja", "Rincon de Valentín", "Salto", "San Antonio", "Saucedo", "Sarandí del Arapey", "Termas del Daymán"],
+                "San José": ["Ciudad de Plata", "Ecilda Paullier", "Libertad", "Puntas de Valdez", "Rafael Perazza", "Rodríguez", "San José de Mayo"],
+                "Soriano": ["Cardona", "Chacra de Dolores", "Dolores", "José Enrique Rodó", "La Pedrera", "Mercedes", "Palmitas", "Villa Soriano"],
+                "Tacuarembó": ["Achar", "Balneario Iporá", "Cuchilla de Peralta", "Curtina", "Cuchilla del Ombú", "Clara", "Las Toscas", "Laureles", "Paso de los Toros", "Paso del Cerro", "Rincón del Bonete", "San Gregorio de Polanco", "Tacuarembó", "Tambores", "Villa Ansina"],
+                "Treinta y Tres": ["Cerro Chato", "General Enrique Martínez", "Santa Clara de Olimar", "Treinta y Tres", "Vergara", "Villa Sara"],
             };
 
             function actualizarLocalidades() {
