@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <title>Agregar producto</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+    <link href="img/favicon.ico" rel="icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&family=Poppins:wght@200;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <div class="container-fluid sticky-top">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <a href="index.html" class="navbar-brand">
+                    <h2 class="text-white">SER Solutions</h2>
+                </a>
+                <button type="button" class="navbar-toggler ms-auto me-0" data-bs-toggle="collapse"
+                    data-bs-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="navbar-nav ms-auto">
+                        <a href="index.html" class="nav-item nav-link active">Inicio</a>
+                        <a href="about.html" class="nav-item nav-link">Productos</a>
+                        <a href="servicios.html" class="nav-item nav-link">Lotes</a>
+                        <a href="contacto.html" class="nav-item nav-link">Vehículos</a>
+                        <a href="login.html" class="nav-item nav-link">Almacenes</a>
+                        <a href="login.html" class="nav-item nav-link">Cerrar sesión</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <div class="container-fluid newsletter bg-primary hero-header py-5"></div>
+
+    <div class="container mt-3">
+        <h2 class="text-center">Agregar nuevo producto:</h2>
+        <form class="col-md-6 mt-5 mx-auto">
+            <label>Código:</label>
+            <input type="text" class="form-control mt-1" id="Codigo">
+            <label>Fecha:</label>
+            <input type="text" class="form-control mt-1" id="Fecha">
+            <label>Estado:</label>
+            <input type="text" class="form-control mt-1" id="Estado">
+            <label>Peso:</label>
+            <input type="text" class="form-control mt-1" id="Peso">
+            <div class="form-group">
+                <label for="Departamento">Departamento:</label>
+                <select class="form-control mt-1" id="Departamento">
+                    <option value="Artigas">Artigas</option>
+                    <option value="Canelones">Canelones</option>
+                    <option value="Cerro Largo">Cerro Largo</option>
+                    <option value="Colonia">Colonia</option>
+                    <option value="Durazno">Durazno</option>
+                    <option value="Flores">Flores</option>
+                    <option value="Florida">Florida</option>
+                    <option value="Lavalleja">Lavalleja</option>
+                    <option value="Maldonado">Maldonado</option>
+                    <option value="Montevideo">Montevideo</option>
+                    <option value="Paysandú">Paysandú</option>
+                    <option value="Río Negro">Río Negro</option>
+                    <option value="Rivera">Rivera</option>
+                    <option value="Rocha">Rocha</option>
+                    <option value="Salto">Salto</option>
+                    <option value="San José">San José</option>
+                    <option value="Soriano">Soriano</option>
+                    <option value="Tacuarembó">Tacuarembó</option>
+                    <option value="Treinta y Tres">Treinta y Tres</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="Localidad">Localidad:</label>
+                <select class="form-control mt-1" id="Localidad">
+
+                </select>
+            </div>
+            <label>Dirección:</label>
+            <input type="text" class="form-control mt-1" id="Dirección">
+            <button class="btn btn-primary w-100 py-2 mt-4" type="submit">Guardar</button>
+        </form>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            var localidadesPorDepartamento = {
+                "Artigas": ["Artigas", "Bella Unión", "Baltasar Brum", "Bernabé Rivera", "Colonia Palma", "Montes Quintela", "Paso Cmpamento", "Sequeira", "Tomás Gomensoro"],
+                "Canelones": ["Atlántida", "Barra de Carrasco", "Canelones", "Ciudad de la Costa", "Colonia Nicolich", "La Paz", "Las Piedras", "Pando", "Paso Carrasco", "Santa Lucía"],
+                // Agrega las localidades para los demás departamentos aquí...
+            };
+
+            function actualizarLocalidades() {
+                var departamentoSeleccionado = $("#Departamento").val();
+                var localidades = localidadesPorDepartamento[departamentoSeleccionado];
+
+                $("#Localidad").empty();
+
+                $.each(localidades, function (index, localidad) {
+                    $("#Localidad").append($('<option>', {
+                        value: localidad,
+                        text: localidad
+                    }));
+                });
+            }
+
+            $("#Departamento").change(function () {
+                actualizarLocalidades();
+            });
+
+            actualizarLocalidades();
+        });
+    </script>
+
+
+
+
+
+
+    
+    
+
+    <div class="container-fluid bg-white footer mt-5">
+        <div class="container wow fadeIn" data-wow-delay="0.1s">
+            <div class="copyright">
+                <div class="row">
+                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                        &copy; <a href="https://www.sersolutions.com" class="border-bottom" href="#">SER Solutions</a>, Todos los derechos reservados.
+                    </div>
+                    <div class="col-md-6 text-center text-md-end">
+                        <div class="footer-menu">
+                            <a href="about.html">Feedback</a>
+                            <a href="contacto.html">Cambiar idioma</a>
+                            <a href="login.html">Cerrar sesión</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/wow/wow.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
