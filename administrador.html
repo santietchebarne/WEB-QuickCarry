@@ -72,7 +72,7 @@
                 <input type="text" class="form-control mt-1" id="segundoApellido" name="segundoApellido" style="text-transform: uppercase;">
                 
                 <label for="cedula">Cédula de Identidad:</label>
-                <input type="text" class="form-control mt-1" id="cedula" name="cedula"  placeholder="Sin puntos y guiones. Ejemplo: 12345678">
+                <input type="number" class="form-control mt-1" id="cedula" name="cedula" pattern="[0-9]*" placeholder="Ejemplo: 12345678" inputmode="numeric" />
                 
                 <label for="direccion">Dirección:</label>
                 <input type="text" class="form-control mt-1" id="direccion" name="direccion" style="text-transform: uppercase;">
@@ -86,23 +86,76 @@
             
             <div class="center-button">
                 <button class="form-control mt-1" onclick="guardarInformacion()">Guardar</button>
-                
             </div>
-            <center>
-            <div>
-                <h2>Verificar:</h2>
-                <p>Primer Nombre: <span id="nombreGuardado"></span></p>
-                <p>Segundo Nombre: <span id="segundoNombreGuardado"></span></p>
-                <p>Primer Apellido: <span id="apellidoGuardado"></span></p>
-                <p>Segundo Apellido: <span id="segundoApellidoGuardado"></span></p>
-                <p>Cédula de Identidad: <span id="cedulaGuardada"></span></p>
-                <p>Dirección: <span id="direccionGuardada"></span></p>
-                <p>Celular: <span id="celularGuardado"></span></p>
-                <p>Correo Electrónico: <span id="correoGuardado"></span></p>
+   
+            <div align="center">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#infoModal">
+        Mostrar Información Guardada
+    </button>
+</div>
+
+  
+    <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="infoModalLabel">Información del Usuario</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Primer Nombre: <span id="nombreGuardado"></span></p>
+                    <p>Segundo Nombre: <span id="segundoNombreGuardado"></span></p>
+                    <p>Primer Apellido: <span id="apellidoGuardado"></span></p>
+                    <p>Segundo Apellido: <span id="segundoApellidoGuardado"></span></p>
+                    <p>Cédula de Identidad: <span id="cedulaGuardada"></span></p>
+                    <p>Dirección: <span id="direccionGuardada"></span></p>
+                    <p>Celular: <span id="celularGuardado"></span></p>
+                    <p>Correo Electrónico: <span id="correoGuardado"></span></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
             </div>
-        </center>
+        </div>
+    </div>
+
+  
+   
+
+    
+    <script>
+        function guardarInformacion() {
+            
+            var primerNombre = document.getElementById('primerNombre').value;
+            var segundoNombre = document.getElementById('segundoNombre').value;
+            var primerApellido = document.getElementById('primerApellido').value;
+            var segundoApellido = document.getElementById('segundoApellido').value;
+            var cedula = document.getElementById('cedula').value;
+            var direccion = document.getElementById('direccion').value;
+            var celular = document.getElementById('celular').value;
+            var correo = document.getElementById('correo').value;
+
+        
+            document.getElementById('nombreGuardado').textContent = primerNombre;
+            document.getElementById('segundoNombreGuardado').textContent = segundoNombre;
+            document.getElementById('apellidoGuardado').textContent = primerApellido;
+            document.getElementById('segundoApellidoGuardado').textContent = segundoApellido;
+            document.getElementById('cedulaGuardada').textContent = cedula;
+            document.getElementById('direccionGuardada').textContent = direccion;
+            document.getElementById('celularGuardado').textContent = celular;
+            document.getElementById('correoGuardado').textContent = correo;
+
+            
+            var modal = new bootstrap.Modal(document.getElementById('infoModal'));
+            modal.show();
+        }
+    </script>
+</body>
+</html>
+
+
             <script>
-                // Función para guardar la información del usuario
+                
                 function guardarInformacion() {
                     const primerNombre = document.getElementById("primerNombre").value;
                     const segundoNombre = document.getElementById("segundoNombre").value;
@@ -113,7 +166,7 @@
                     const celular = document.getElementById("celular").value;
                     const correo = document.getElementById("correo").value;
                     
-                    // Mostrar la información en la página
+                  
                     document.getElementById("nombreGuardado").textContent = primerNombre;
                     document.getElementById("segundoNombreGuardado").textContent = segundoNombre;
                     document.getElementById("apellidoGuardado").textContent = primerApellido;
