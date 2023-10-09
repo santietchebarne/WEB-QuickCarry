@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <title>Agregar producto</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+    <link href="img/favicon.ico" rel="icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&family=Poppins:wght@200;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+
+<body>
+    <div class="container-fluid sticky-top">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <a href="index.html" class="navbar-brand mx-auto"> <!-- Utiliza la clase mx-auto -->
+                    <img class="img-fluid animated pulse infinite mt-2" src="img/logoblank.png" alt="" width="140">
+                </a>
+                <button type="button" class="navbar-toggler ms-auto me-0" data-bs-toggle="collapse"
+                    data-bs-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse mt-2" id="navbarCollapse">
+                    <div class="navbar-nav ms-auto">
+                        <a href="index.html" class="nav-item nav-link">Inicio</a>
+                        <a href="about.html" class="nav-item nav-link active">Productos</a>
+                        <a href="servicios.html" class="nav-item nav-link">Lotes</a>
+                        <a href="contacto.html" class="nav-item nav-link">Vehículos</a>
+                        <a href="login.html" class="nav-item nav-link">Almacenes</a>
+                        <a href="login.html" class="nav-item nav-link">Cerrar sesión</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <div class="container-fluid newsletter bg-primary hero-header py-5"></div>
+
+    <div class="container mt-5">
+        <h2 class="text-center">Agregar nuevo producto:</h2>
+        <form class="col-md-6 mt-5 mx-auto">
+            <label>Código:</label>
+            <input type="text" class="form-control mt-1" id="Codigo">
+            <label>Fecha:</label>
+            <input type="text" class="form-control mt-1" id="Fecha">
+            <label>Estado:</label>
+            <input type="text" class="form-control mt-1" id="Estado">
+            <label>Peso:</label>
+            <input type="number" class="form-control mt-1" id="Peso" min="0.01" required>
+            <div class="form-group">
+                <label for="Departamento">Departamento:</label>
+                <select class="form-control mt-1" id="Departamento">
+                    <option value="Artigas">Artigas</option>
+                    <option value="Canelones">Canelones</option>
+                    <option value="Cerro Largo">Cerro Largo</option>
+                    <option value="Colonia">Colonia</option>
+                    <option value="Durazno">Durazno</option>
+                    <option value="Flores">Flores</option>
+                    <option value="Florida">Florida</option>
+                    <option value="Lavalleja">Lavalleja</option>
+                    <option value="Maldonado">Maldonado</option>
+                    <option value="Montevideo">Montevideo</option>
+                    <option value="Paysandú">Paysandú</option>
+                    <option value="Río Negro">Río Negro</option>
+                    <option value="Rivera">Rivera</option>
+                    <option value="Rocha">Rocha</option>
+                    <option value="Salto">Salto</option>
+                    <option value="San José">San José</option>
+                    <option value="Soriano">Soriano</option>
+                    <option value="Tacuarembó">Tacuarembó</option>
+                    <option value="Treinta y Tres">Treinta y Tres</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="Localidad">Localidad:</label>
+                <select class="form-control mt-1" id="Localidad">
+
+                </select>
+            </div>
+            <label>Dirección:</label>
+            <input type="text" class="form-control mt-1" id="Dirección">
+            <button class="btn btn-primary w-100 py-2 mt-4" type="submit">Guardar</button>
+            <button class="btn btn-outline-primary w-100 py-2 mt-4" type="submit">Cancelar</button>
+            <div class="error-message" id="errorPeso">El peso debe ser mayor a cero y puede incluir decimales.</div>
+        </form>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $.datepicker.setDefaults($.datepicker.regional["es"]);
+            $("#Fecha").datepicker({
+                dateFormat: 'dd/mm/yy',
+                minDate: 1,
+            });
+        });
+    </script>
+
+<script>
+    // Función para validar el campo de Peso
+    function validarPeso() {
+        var pesoInput = document.getElementById("Peso");
+        var pesoValor = parseFloat(pesoInput.value);
+        var errorMensaje = document.getElementById("errorPeso");
+
+        if (pesoInput.value.trim() === "") {
+            // El campo está vacío, no se activa la validación
+            pesoInput.classList.remove("input-error"); // Elimina la clase de estilo
+            errorMensaje.style.display = "none"; // Oculta el mensaje de error
+        } else if (isNaN(pesoValor) || pesoValor <= 0) {
+            pesoInput.classList.add("input-error"); // Agrega la clase de estilo al input
+            errorMensaje.style.display = "block"; // Muestra el mensaje de error
+            pesoInput.focus(); // Coloca el foco nuevamente en el campo
+        } else {
+            pesoInput.classList.remove("input-error"); // Elimina la clase de estilo
+            errorMensaje.style.display = "none"; // Oculta el mensaje de error si es válido
+        }
+    }
+
+    // Asocia la función de validación al evento "blur" del campo de Peso
+    document.getElementById("Peso").addEventListener("blur", validarPeso);
+</script>  
+    
+    <script>
+        $(document).ready(function () {
+            var localidadesPorDepartamento = {
+                "Artigas": ["Artigas", "Bella Unión", "Baltasar Brum", "Bernabé Rivera", "Colonia Palma", "Montes Quintela", "Paso Cmpamento", "Sequeira", "Tomás Gomensoro"],
+                "Canelones": ["Atlántida", "Barra de Carrasco", "Canelones", "Ciudad de la Costa", "Colonia Nicolich", "La Paz", "Las Piedras", "Pando", "Paso Carrasco", "Santa Lucía"],
+                "Cerro Largo": ["Aceguá", "Fraile Muerto", "Isidoro Noblía", "Lago Merín", "Melo", "Plácido Rosas", "Río Branco", "Tupambaé"],
+                "Colonia": ["Carmelo", "Colonia del Sacramento", "Juan Lacaze", "Nueva Helvecia", "Nueva Palmira", "Rosario", "Tarariras"],
+                "Durazno": ["Durazno", "Sarandí del Yí", "Villa del Carmen"],
+                "Flores": ["Andresito", "Área Rural", "Ismael Cortinas", "La Casilla", "Trinidad"],
+                "Florida": ["25 de Agosto", "25 de Mayo", "Cardal", "Casupá", "Cerro Colorado", "Florida", "Fray Marcos", "Sarandí Grande"],
+                "Lavalleja": ["Colón", "Illescas", "José Batlle y Ordóñez", "Mariscala", "Minas", "Pirarajá", "Solís de Mataojo", "Zapicán"],
+                "Maldonado": ["Aiguá", "Cerro Pelado", "Gregorio Aznárez", "Hipódromo", "José Ignacio", "La Barra", "Maldonado", "Pan de Azúcar", "Piriápolis", "Portezuelo", "Punta del Este", "San Carlos", "San Rafael"],
+                "Montevideo": ["Abayubá", "Montevideo", "Montevideo Rural", "Pajas Blancas", "Santiago Vázquez"],
+                "Paysandú": ["Barrio Norte", "Guichón", "Nuevo Paysandú", "Paysandú", "Porvenir", "Piedras Coloradas", "Quebracho", "Tambores"],
+                "Río Negro": ["Algorta", "Bellaco", "El Ombú", "General Borges", "Fray Bentos", "Los Arrayanes", "Las Cañas", "Menafra", "Nuevo Berlín", "Paso de los Mellizos", "San Javier", "Sarandí de Navarro", "Villa María", "Young"],
+                "Rivera": ["La Pedrera", "Masoller", "Minas de Corrales", "Rivera", "Santa Teresa", "Tranqueras", "Vichadero"],
+                "Rocha": ["Chuy", "Castillos", "Lascano", "La Paloma"],
+                "Salto": ["Albisu", "Colonia 18 de Julio", "Colonia Itapebí", "Constitución", "Fernández", "Pueblo Lavalleja", "Rincon de Valentín", "Salto", "San Antonio", "Saucedo", "Sarandí del Arapey", "Termas del Daymán"],
+                "San José": ["Ciudad de Plata", "Ecilda Paullier", "Libertad", "Puntas de Valdez", "Rafael Perazza", "Rodríguez", "San José de Mayo"],
+                "Soriano": ["Cardona", "Chacra de Dolores", "Dolores", "José Enrique Rodó", "La Pedrera", "Mercedes", "Palmitas", "Villa Soriano"],
+                "Tacuarembó": ["Achar", "Balneario Iporá", "Cuchilla de Peralta", "Curtina", "Cuchilla del Ombú", "Clara", "Las Toscas", "Laureles", "Paso de los Toros", "Paso del Cerro", "Rincón del Bonete", "San Gregorio de Polanco", "Tacuarembó", "Tambores", "Villa Ansina"],
+                "Treinta y Tres": ["Cerro Chato", "General Enrique Martínez", "Santa Clara de Olimar", "Treinta y Tres", "Vergara", "Villa Sara"],
+            };
+
+            function actualizarLocalidades() {
+                var departamentoSeleccionado = $("#Departamento").val();
+                var localidades = localidadesPorDepartamento[departamentoSeleccionado];
+
+                $("#Localidad").empty();
+
+                $.each(localidades, function (index, localidad) {
+                    $("#Localidad").append($('<option>', {
+                        value: localidad,
+                        text: localidad
+                    }));
+                });
+            }
+
+            $("#Departamento").change(function () {
+                actualizarLocalidades();
+            });
+
+            actualizarLocalidades();
+        });
+    </script>
+
+
+
+
+
+
+    
+    
+
+    <div class="container-fluid bg-white footer mt-5">
+        <div class="container wow fadeIn" data-wow-delay="0.1s">
+            <div class="copyright">
+                <div class="row">
+                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                        &copy; <a href="https://www.sersolutions.com" class="border-bottom" href="#">SER Solutions</a>, Todos los derechos reservados.
+                    </div>
+                    <div class="col-md-6 text-center text-md-end">
+                        <div class="footer-menu">
+                            <a href="about.html">Feedback</a>
+                            <a href="contacto.html">Cambiar idioma</a>
+                            <a href="login.html">Cerrar sesión</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/wow/wow.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
