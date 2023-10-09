@@ -18,20 +18,22 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </head>
 
 <body>
     <div class="container-fluid sticky-top">
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light">
-                <a href="index.html" class="navbar-brand">
-                    <h2 class="text-white">SER Solutions</h2>
+                <a href="index.html" class="navbar-brand mx-auto"> <!-- Utiliza la clase mx-auto -->
+                    <img class="img-fluid animated pulse infinite mt-2" src="img/logoblank.png" alt="" width="140">
                 </a>
                 <button type="button" class="navbar-toggler ms-auto me-0" data-bs-toggle="collapse"
                     data-bs-target="#navbarCollapse">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div class="collapse navbar-collapse mt-2" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
                         <a href="index.html" class="nav-item nav-link active">Inicio</a>
                         <a href="about.html" class="nav-item nav-link">Productos</a>
@@ -46,7 +48,7 @@
     </div>
     <div class="container-fluid newsletter bg-primary hero-header py-5"></div>
 
-    <div class="container mt-3">
+    <div class="container mt-5">
         <h2 class="text-center">Agregar nuevo producto:</h2>
         <form class="col-md-6 mt-5 mx-auto">
             <label>Código:</label>
@@ -96,26 +98,10 @@
 
     <script>
         $(document).ready(function () {
-            // Habilita el Datepicker en el campo de fecha
+            $.datepicker.setDefaults($.datepicker.regional["es"]);
             $("#Fecha").datepicker({
-                dateFormat: 'dd/mm/yy', // Formato de fecha personalizado
-                minDate: 0, // Asegura que solo se permitan fechas futuras
-                showTime: true, // Habilita la selección de hora
-                controlType: 'select', // Utiliza un selector de tiempo
-                timeFormat: 'HH:mm', // Formato de hora (24 horas)
-                stepMinute: 15 // Intervalo de minutos en el selector de tiempo
-            });
-
-            // Agrega una función de validación personalizada para asegurarse de que la fecha sea futura
-            $("#Fecha").on("change", function () {
-                var selectedDate = $(this).datepicker('getDate');
-                var currentDate = new Date();
-                currentDate.setMinutes(currentDate.getMinutes() + 15); // Añade 15 minutos para asegurarse de que la hora actual sea válida
-
-                if (selectedDate < currentDate) {
-                    alert("La fecha debe ser futura.");
-                    $(this).val(""); // Limpia el campo de fecha si no es válido
-                }
+                dateFormat: 'dd/mm/yy',
+                minDate: 1,
             });
         });
     </script>
@@ -125,6 +111,8 @@
 
 
 
+
+    
     <script>
         $(document).ready(function () {
             var localidadesPorDepartamento = {
@@ -200,7 +188,6 @@
 
     <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="lib/wow/wow.min.js"></script>
     <script src="lib/easing/easing.min.js"></script>

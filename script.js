@@ -11,4 +11,16 @@ function convertToPasswordInput() {
     // Reemplaza el div con el nuevo input
     passwordDiv.parentNode.replaceChild(newPasswordInput, passwordDiv);
   }
+
+  
+
+
+  $(document).ready(function () {
+    // Habilita el Datepicker en el campo de fecha
+    $("#Fecha").datepicker({
+        dateFormat: 'dd/mm/yy', // Formato de fecha personalizado
+        minDate: 1, // Solo se permite una fecha futura (mínimo 1 día desde hoy)
+    });
+});
+
   
