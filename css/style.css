@@ -196,3 +196,6 @@ img.animated.pulse {
     padding-right:0;
     border-right:none
 }
+.input-error .Peso{
+    border: 2px solid red;
+}

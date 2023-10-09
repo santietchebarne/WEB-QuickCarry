@@ -35,8 +35,8 @@
                 </button>
                 <div class="collapse navbar-collapse mt-2" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
-                        <a href="index.html" class="nav-item nav-link active">Inicio</a>
-                        <a href="about.html" class="nav-item nav-link">Productos</a>
+                        <a href="index.html" class="nav-item nav-link">Inicio</a>
+                        <a href="about.html" class="nav-item nav-link active">Productos</a>
                         <a href="servicios.html" class="nav-item nav-link">Lotes</a>
                         <a href="contacto.html" class="nav-item nav-link">Vehículos</a>
                         <a href="login.html" class="nav-item nav-link">Almacenes</a>
@@ -58,7 +58,7 @@
             <label>Estado:</label>
             <input type="text" class="form-control mt-1" id="Estado">
             <label>Peso:</label>
-            <input type="text" class="form-control mt-1" id="Peso">
+            <input type="number" class="form-control mt-1" id="Peso" min="0.01" required>
             <div class="form-group">
                 <label for="Departamento">Departamento:</label>
                 <select class="form-control mt-1" id="Departamento">
@@ -93,6 +93,7 @@
             <input type="text" class="form-control mt-1" id="Dirección">
             <button class="btn btn-primary w-100 py-2 mt-4" type="submit">Guardar</button>
             <button class="btn btn-outline-primary w-100 py-2 mt-4" type="submit">Cancelar</button>
+            <div class="error-message" id="errorPeso">El peso debe ser mayor a cero y puede incluir decimales.</div>
         </form>
     </div>
 
@@ -106,12 +107,30 @@
         });
     </script>
 
+<script>
+    // Función para validar el campo de Peso
+    function validarPeso() {
+        var pesoInput = document.getElementById("Peso");
+        var pesoValor = parseFloat(pesoInput.value);
+        var errorMensaje = document.getElementById("errorPeso");
 
+        if (pesoInput.value.trim() === "") {
+            // El campo está vacío, no se activa la validación
+            pesoInput.classList.remove("input-error"); // Elimina la clase de estilo
+            errorMensaje.style.display = "none"; // Oculta el mensaje de error
+        } else if (isNaN(pesoValor) || pesoValor <= 0) {
+            pesoInput.classList.add("input-error"); // Agrega la clase de estilo al input
+            errorMensaje.style.display = "block"; // Muestra el mensaje de error
+            pesoInput.focus(); // Coloca el foco nuevamente en el campo
+        } else {
+            pesoInput.classList.remove("input-error"); // Elimina la clase de estilo
+            errorMensaje.style.display = "none"; // Oculta el mensaje de error si es válido
+        }
+    }
 
-
-
-
-
+    // Asocia la función de validación al evento "blur" del campo de Peso
+    document.getElementById("Peso").addEventListener("blur", validarPeso);
+</script>  
     
     <script>
         $(document).ready(function () {
