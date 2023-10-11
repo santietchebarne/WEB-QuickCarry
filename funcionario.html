@@ -51,7 +51,7 @@
     <div class="container mt-5">
         <h2 class="text-center">Agregar nuevo producto:</h2>
         <form class="col-md-6 mt-5 mx-auto">
-            <label>Código:</label>
+            <label>Almacén:</label>
             <input type="text" class="form-control mt-1" id="Codigo">
             <label>Fecha:</label>
             <input type="text" class="form-control mt-1" id="Fecha">
@@ -61,7 +61,7 @@
             <input type="number" class="form-control mt-1" id="Peso" min="0.01" required>
             <div class="error-message" id="errorPeso">El peso debe ser mayor a cero y puede incluir decimales.</div>
             <div class="form-group">
-                <label for="Departamento">Departamento:</label>
+                <label class="mt-1" for="Departamento">Departamento:</label>
                 <select class="form-control mt-1" id="Departamento">
                     <option value="Artigas">Artigas</option>
                     <option value="Canelones">Canelones</option>
@@ -84,7 +84,7 @@
                     <option value="Treinta y Tres">Treinta y Tres</option>
                 </select>
             </div>
-            <div class="form-group">
+            <div class="form-group mt-1">
                 <label for="Localidad">Localidad:</label>
                 <select class="form-control mt-1" id="Localidad">
 
@@ -93,7 +93,6 @@
             <label>Dirección:</label>
             <input type="text" class="form-control mt-1" id="Dirección">
             <button class="btn btn-primary w-100 py-2 mt-4" type="submit">Guardar</button>
-            <button class="btn btn-outline-primary w-100 py-2 mt-4" type="submit">Cancelar</button>
         </form>
     </div>
 

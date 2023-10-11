@@ -20,7 +20,9 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 </head>
+
 
 <body>
     <div class="container-fluid sticky-top">
@@ -50,86 +52,74 @@
 
     <div class="container mt-5">
         <h2 class="text-center">Crear nuevo usuario:</h2>
-        <form class="col-md-6 mt-5 mx-auto">
+        <form class="col-md-6 mt-5 mx-auto" id="userForm">
             <label for="rol">Tipo de usuario:</label>
-            <select class="form-control mt-1" id="rol" ;>
+            <select class="form-control mt-1" id="rol">
                 <option value="funcionario">Funcionario</option>
                 <option value="transportista">Transportista</option>
                 <option value="administrador">Administrador</option>
             </select>
-           
-            <form>
-                <label for="primerNombre">Primer Nombre:</label>
-                <input type="text" class="form-control mt-1" id="primerNombre" name="primerNombre" style="text-transform: uppercase;">
-                
-                <label for="segundoNombre">Segundo Nombre:</label>
-                <input type="text" class="form-control mt-1" id="segundoNombre" name="segundoNombre" style="text-transform: uppercase;">
-                
-                <label for="primerApellido">Primer Apellido:</label>
-                <input type="text" class="form-control mt-1" id="primerApellido" name="primerApellido" style="text-transform: uppercase;">
-                
-                <label for="segundoApellido">Segundo Apellido:</label>
-                <input type="text" class="form-control mt-1" id="segundoApellido" name="segundoApellido" style="text-transform: uppercase;">
-                
-                <label for="cedula">Cédula de Identidad:</label>
-                <input type="text" class="form-control mt-1" id="cedula" name="cedula"  placeholder="Sin puntos y guiones. Ejemplo: 12345678">
-                
-                <label for="direccion">Dirección:</label>
-                <input type="text" class="form-control mt-1" id="direccion" name="direccion" style="text-transform: uppercase;">
-                
-                <label for="celular">Celular:</label>
-                <input type="text" class="form-control mt-1" id="celular" name="celular" style="text-transform: uppercase;">
-                
-                <label for="correo">Correo Electrónico:</label>
-                <input type="text" class="form-control mt-1" id="correo" name="correo" style="text-transform: uppercase;">
-            </form>
-            
+
+            <label for="primerNombre">Primer nombre:</label>
+            <input type="text" class="form-control mt-1" id="primerNombre" name="primerNombre" style="text-transform: uppercase;">
+
+            <label for="segundoNombre">Segundo nombre:</label>
+            <input type="text" class="form-control mt-1" id="segundoNombre" name="segundoNombre" style="text-transform: uppercase;">
+
+            <label for="primerApellido">Primer apellido:</label>
+            <input type="text" class="form-control mt-1" id="primerApellido" name="primerApellido" style="text-transform: uppercase;">
+
+            <label for="segundoApellido">Segundo Apellido:</label>
+            <input type="text" class="form-control mt-1" id="segundoApellido" name="segundoApellido" style="text-transform: uppercase;">
+
+            <label for="cedula">Cédula de Identidad:</label>
+            <input type="text" class="form-control mt-1" id="cedula" name="cedula" placeholder="Sin puntos y guiones. Ejemplo: 12345678">
+
+            <label for="direccion">Dirección:</label>
+            <input type="text" class="form-control mt-1" id="direccion" name="direccion" style="text-transform: uppercase;">
+
+            <label for="celular">Celular:</label>
+            <input type="text" class="form-control mt-1" id="celular" name="celular" style="text-transform: uppercase;">
+
+            <label for="correo">Correo Electrónico:</label>
+            <input type="text" class="form-control mt-1" id="correo" name="correo" style="text-transform: uppercase;">
+
             <div class="center-button">
-                <button class="btn btn-primary py-2 mt-4" type="submit">Guardar</button>
-                <button class="btn btn-outline-primary w-100 py-2 mt-4" type="submit">Cancelar</button>                
+                <button class="btn btn-primary w-100 py-2 mt-4" type="button" id="guardarButton" data-toggle="modal" data-target="#confirmationModal">Guardar</button>
             </div>
-            <center>
-            <div>
-                <h2>Verificar:</h2>
-                <p>Primer Nombre: <span id="nombreGuardado"></span></p>
-                <p>Segundo Nombre: <span id="segundoNombreGuardado"></span></p>
-                <p>Primer Apellido: <span id="apellidoGuardado"></span></p>
-                <p>Segundo Apellido: <span id="segundoApellidoGuardado"></span></p>
-                <p>Cédula de Identidad: <span id="cedulaGuardada"></span></p>
-                <p>Dirección: <span id="direccionGuardada"></span></p>
-                <p>Celular: <span id="celularGuardado"></span></p>
-                <p>Correo Electrónico: <span id="correoGuardado"></span></p>
+
+        </form>
+
+        <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Confirmación</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Por favor, confirma si deseas guardar los datos ingresados:</p>
+                        <ul>
+                            <li><b>Primer Nombre: <span id="nombreGuardadoModal"></span></li>
+                            <li><b>Segundo Nombre:</b> <span id="segundoNombreGuardadoModal"></span></li>
+                            <li><b>Primer Apellido:</b> <span id="apellidoGuardadoModal"></span></li>
+                            <li><b>Segundo Apellido:</b> <span id="segundoApellidoGuardadoModal"></span></li>
+                            <li><b>Cédula de Identidad:</b> <span id="cedulaGuardadaModal"></span></li>
+                            <li><b>Dirección:</b> <span id="direccionGuardadaModal"></span></li>
+                            <li><b>Celular:</b> <span id="celularGuardadoModal"></span></li>
+                            <li><b>Correo Electrónico:</b> <span id="correoGuardadoModal"></span></li>
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" id="confirmarGuardar">Guardar</button>
+                    </div>
+                </div>
             </div>
-        </center>
-            <script>
-                function guardarInformacion() {
-                    const primerNombre = document.getElementById("primerNombre").value;
-                    const segundoNombre = document.getElementById("segundoNombre").value;
-                    const primerApellido = document.getElementById("primerApellido").value;
-                    const segundoApellido = document.getElementById("segundoApellido").value;
-                    const cedula = document.getElementById("cedula").value;
-                    const direccion = document.getElementById("direccion").value;
-                    const celular = document.getElementById("celular").value;
-                    const correo = document.getElementById("correo").value;
-
-                    document.getElementById("nombreGuardado").textContent = primerNombre;
-                    document.getElementById("segundoNombreGuardado").textContent = segundoNombre;
-                    document.getElementById("apellidoGuardado").textContent = primerApellido;
-                    document.getElementById("segundoApellidoGuardado").textContent = segundoApellido;
-                    document.getElementById("cedulaGuardada").textContent = cedula;
-                    document.getElementById("direccionGuardada").textContent = direccion;
-                    document.getElementById("celularGuardado").textContent = celular;
-                    document.getElementById("correoGuardado").textContent = correo;
-                }
-            </script>
-
-
-
-
-
-
-    
-    
+        </div>
+    </div>
 
     <div class="container-fluid bg-white footer mt-5">
         <div class="container wow fadeIn" data-wow-delay="0.1s">
@@ -158,6 +148,41 @@
     <script src="lib/waypoints/waypoints.min.js"></script>
     <script src="lib/owlcarousel/owl.carousel.min.js"></script>
     <script src="js/main.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#guardarButton').click(function () {
+                guardarInformacion();
+                $('#confirmationModal').modal('show');
+            });
+
+            $('#confirmarGuardar').click(function () {
+                // Aquí puedes agregar la lógica para guardar los datos en tu sistema.
+                // Por ahora, simplemente cerramos el modal.
+                $('#confirmationModal').modal('hide');
+            });
+        });
+
+        function guardarInformacion() {
+            const primerNombre = document.getElementById("primerNombre").value;
+            const segundoNombre = document.getElementById("segundoNombre").value;
+            const primerApellido = document.getElementById("primerApellido").value;
+            const segundoApellido = document.getElementById("segundoApellido").value;
+            const cedula = document.getElementById("cedula").value;
+            const direccion = document.getElementById("direccion").value;
+            const celular = document.getElementById("celular").value;
+            const correo = document.getElementById("correo").value;
+
+            document.getElementById("nombreGuardadoModal").textContent = primerNombre;
+            document.getElementById("segundoNombreGuardadoModal").textContent = segundoNombre;
+            document.getElementById("apellidoGuardadoModal").textContent = primerApellido;
+            document.getElementById("segundoApellidoGuardadoModal").textContent = segundoApellido;
+            document.getElementById("cedulaGuardadaModal").textContent = cedula;
+            document.getElementById("direccionGuardadaModal").textContent = direccion;
+            document.getElementById("celularGuardadoModal").textContent = celular;
+            document.getElementById("correoGuardadoModal").textContent = correo;
+        }
+    </script>
 </body>
 
 </html>
