@@ -92,9 +92,64 @@
             </div>
             <label>Dirección:</label>
             <input type="text" class="form-control mt-1" id="Dirección">
-            <button class="btn btn-primary w-100 py-2 mt-4" type="submit">Guardar</button>
+            <button class="btn btn-primary w-100 py-2 mt-4" type="button" id="openConfirmationModal">Guardar</button>
         </form>
     </div>
+
+    <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmationModalLabel">Confirmación de Guardar</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Aquí se mostrarán los datos del formulario para confirmar -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="confirmSave">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            // ... (tu código de inicialización de fecha y validación de peso) ...
+    
+            // Captura el evento de clic en el botón "Guardar"
+            $("#openConfirmationModal").on("click", function () {
+                // Recopila los datos del formulario
+                var almacen = $("#Codigo").val();
+                var fecha = $("#Fecha").val();
+                var estado = $("#Estado").val();
+                var peso = $("#Peso").val();
+                var departamento = $("#Departamento").val();
+                var localidad = $("#Localidad").val();
+                var direccion = $("#Dirección").val();
+    
+                // Construye el mensaje de confirmación
+                var confirmationMessage = `
+                    <p><strong>Almacén:</strong> ${almacen}</p>
+                    <p><strong>Fecha:</strong> ${fecha}</p>
+                    <p><strong>Estado:</strong> ${estado}</p>
+                    <p><strong>Peso:</strong> ${peso}</p>
+                    <p><strong>Departamento:</strong> ${departamento}</p>
+                    <p><strong>Localidad:</strong> ${localidad}</p>
+                    <p><strong>Dirección:</strong> ${direccion}</p>
+                `;
+    
+                // Muestra los datos en el modal de confirmación
+                $("#confirmationData").html(confirmationMessage);
+    
+                // Abre el modal de confirmación
+                $("#confirmationModal").modal("show");
+            });
+        });
+    </script>
 
     <script>
         $(document).ready(function () {
@@ -202,5 +257,4 @@
     <script src="lib/owlcarousel/owl.carousel.min.js"></script>
     <script src="js/main.js"></script>
 </body>
-
 </html>
