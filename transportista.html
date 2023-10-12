@@ -49,134 +49,54 @@
     <div class="container-fluid newsletter bg-primary hero-header py-5"></div>
 
     <div class="container mt-5">
-        <h2 class="text-center">Agregar nuevo producto:</h2>
-        <form class="col-md-6 mt-5 mx-auto">
-            <label>Código:</label>
-            <input type="text" class="form-control mt-1" id="Codigo">
-            <label>Fecha:</label>
-            <input type="text" class="form-control mt-1" id="Fecha">
-            <label>Estado:</label>
-            <input type="text" class="form-control mt-1" id="Estado">
-            <label>Peso:</label>
-            <input type="number" class="form-control mt-1" id="Peso" min="0.01" required>
-            <div class="form-group">
-                <label for="Departamento">Departamento:</label>
-                <select class="form-control mt-1" id="Departamento">
-                    <option value="Artigas">Artigas</option>
-                    <option value="Canelones">Canelones</option>
-                    <option value="Cerro Largo">Cerro Largo</option>
-                    <option value="Colonia">Colonia</option>
-                    <option value="Durazno">Durazno</option>
-                    <option value="Flores">Flores</option>
-                    <option value="Florida">Florida</option>
-                    <option value="Lavalleja">Lavalleja</option>
-                    <option value="Maldonado">Maldonado</option>
-                    <option value="Montevideo">Montevideo</option>
-                    <option value="Paysandú">Paysandú</option>
-                    <option value="Río Negro">Río Negro</option>
-                    <option value="Rivera">Rivera</option>
-                    <option value="Rocha">Rocha</option>
-                    <option value="Salto">Salto</option>
-                    <option value="San José">San José</option>
-                    <option value="Soriano">Soriano</option>
-                    <option value="Tacuarembó">Tacuarembó</option>
-                    <option value="Treinta y Tres">Treinta y Tres</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="Localidad">Localidad:</label>
-                <select class="form-control mt-1" id="Localidad">
+        
 
-                </select>
-            </div>
-            <label>Dirección:</label>
-            <input type="text" class="form-control mt-1" id="Dirección">
-            <button class="btn btn-primary w-100 py-2 mt-4" type="submit">Guardar</button>
-            <button class="btn btn-outline-primary w-100 py-2 mt-4" type="submit">Cancelar</button>
-            <div class="error-message" id="errorPeso">El peso debe ser mayor a cero y puede incluir decimales.</div>
-        </form>
+
+
+
+
+    <title>Información de Producto</title>
+   
+
+    <div class="container mt-5">
+        <h2 class="text-center">Información de Producto</h2>
+        <div class="product-info">
+            <p><strong>Código del Producto:</strong> PRODUCTO001</p>
+            <p><strong>Fecha:</strong> 2023-10-15</p>
+            <p><strong>Estado:</strong> En Camino</p>
+            <p><strong>Destino:</strong> Destino A</p>
+            <p><strong>Ruta Asignada:</strong> Ruta 123</p>
+            <p><strong>Peso del Lote:</strong> 500 kg</p>
+            <!-- Botón para marcar como entregado -->
+            <button id="marcarEntregado" class="btn btn-success">Marcar como Entregado</button>
+        </div>
     </div>
 
-    <script>
-        $(document).ready(function () {
-            $.datepicker.setDefaults($.datepicker.regional["es"]);
-            $("#Fecha").datepicker({
-                dateFormat: 'dd/mm/yy',
-                minDate: 1,
-            });
-        });
-    </script>
-
-<script>
-    // Función para validar el campo de Peso
-    function validarPeso() {
-        var pesoInput = document.getElementById("Peso");
-        var pesoValor = parseFloat(pesoInput.value);
-        var errorMensaje = document.getElementById("errorPeso");
-
-        if (pesoInput.value.trim() === "") {
-            // El campo está vacío, no se activa la validación
-            pesoInput.classList.remove("input-error"); // Elimina la clase de estilo
-            errorMensaje.style.display = "none"; // Oculta el mensaje de error
-        } else if (isNaN(pesoValor) || pesoValor <= 0) {
-            pesoInput.classList.add("input-error"); // Agrega la clase de estilo al input
-            errorMensaje.style.display = "block"; // Muestra el mensaje de error
-            pesoInput.focus(); // Coloca el foco nuevamente en el campo
-        } else {
-            pesoInput.classList.remove("input-error"); // Elimina la clase de estilo
-            errorMensaje.style.display = "none"; // Oculta el mensaje de error si es válido
-        }
-    }
-
-    // Asocia la función de validación al evento "blur" del campo de Peso
-    document.getElementById("Peso").addEventListener("blur", validarPeso);
-</script>  
     
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+
     <script>
-        $(document).ready(function () {
-            var localidadesPorDepartamento = {
-                "Artigas": ["Artigas", "Bella Unión", "Baltasar Brum", "Bernabé Rivera", "Colonia Palma", "Montes Quintela", "Paso Cmpamento", "Sequeira", "Tomás Gomensoro"],
-                "Canelones": ["Atlántida", "Barra de Carrasco", "Canelones", "Ciudad de la Costa", "Colonia Nicolich", "La Paz", "Las Piedras", "Pando", "Paso Carrasco", "Santa Lucía"],
-                "Cerro Largo": ["Aceguá", "Fraile Muerto", "Isidoro Noblía", "Lago Merín", "Melo", "Plácido Rosas", "Río Branco", "Tupambaé"],
-                "Colonia": ["Carmelo", "Colonia del Sacramento", "Juan Lacaze", "Nueva Helvecia", "Nueva Palmira", "Rosario", "Tarariras"],
-                "Durazno": ["Durazno", "Sarandí del Yí", "Villa del Carmen"],
-                "Flores": ["Andresito", "Área Rural", "Ismael Cortinas", "La Casilla", "Trinidad"],
-                "Florida": ["25 de Agosto", "25 de Mayo", "Cardal", "Casupá", "Cerro Colorado", "Florida", "Fray Marcos", "Sarandí Grande"],
-                "Lavalleja": ["Colón", "Illescas", "José Batlle y Ordóñez", "Mariscala", "Minas", "Pirarajá", "Solís de Mataojo", "Zapicán"],
-                "Maldonado": ["Aiguá", "Cerro Pelado", "Gregorio Aznárez", "Hipódromo", "José Ignacio", "La Barra", "Maldonado", "Pan de Azúcar", "Piriápolis", "Portezuelo", "Punta del Este", "San Carlos", "San Rafael"],
-                "Montevideo": ["Abayubá", "Montevideo", "Montevideo Rural", "Pajas Blancas", "Santiago Vázquez"],
-                "Paysandú": ["Barrio Norte", "Guichón", "Nuevo Paysandú", "Paysandú", "Porvenir", "Piedras Coloradas", "Quebracho", "Tambores"],
-                "Río Negro": ["Algorta", "Bellaco", "El Ombú", "General Borges", "Fray Bentos", "Los Arrayanes", "Las Cañas", "Menafra", "Nuevo Berlín", "Paso de los Mellizos", "San Javier", "Sarandí de Navarro", "Villa María", "Young"],
-                "Rivera": ["La Pedrera", "Masoller", "Minas de Corrales", "Rivera", "Santa Teresa", "Tranqueras", "Vichadero"],
-                "Rocha": ["Chuy", "Castillos", "Lascano", "La Paloma"],
-                "Salto": ["Albisu", "Colonia 18 de Julio", "Colonia Itapebí", "Constitución", "Fernández", "Pueblo Lavalleja", "Rincon de Valentín", "Salto", "San Antonio", "Saucedo", "Sarandí del Arapey", "Termas del Daymán"],
-                "San José": ["Ciudad de Plata", "Ecilda Paullier", "Libertad", "Puntas de Valdez", "Rafael Perazza", "Rodríguez", "San José de Mayo"],
-                "Soriano": ["Cardona", "Chacra de Dolores", "Dolores", "José Enrique Rodó", "La Pedrera", "Mercedes", "Palmitas", "Villa Soriano"],
-                "Tacuarembó": ["Achar", "Balneario Iporá", "Cuchilla de Peralta", "Curtina", "Cuchilla del Ombú", "Clara", "Las Toscas", "Laureles", "Paso de los Toros", "Paso del Cerro", "Rincón del Bonete", "San Gregorio de Polanco", "Tacuarembó", "Tambores", "Villa Ansina"],
-                "Treinta y Tres": ["Cerro Chato", "General Enrique Martínez", "Santa Clara de Olimar", "Treinta y Tres", "Vergara", "Villa Sara"],
-            };
-
-            function actualizarLocalidades() {
-                var departamentoSeleccionado = $("#Departamento").val();
-                var localidades = localidadesPorDepartamento[departamentoSeleccionado];
-
-                $("#Localidad").empty();
-
-                $.each(localidades, function (index, localidad) {
-                    $("#Localidad").append($('<option>', {
-                        value: localidad,
-                        text: localidad
-                    }));
-                });
-            }
-
-            $("#Departamento").change(function () {
-                actualizarLocalidades();
-            });
-
-            actualizarLocalidades();
+       
+        $("#marcarEntregado").click(function () {
+            // Aquí puedes agregar la lógica para marcar el lote como entregado en tu sistema.
+            // Puedes realizar una solicitud al servidor (por ejemplo, mediante Ajax) para actualizar el estado del lote.
+            // Una vez que el lote esté marcado como entregado, puedes proporcionar retroalimentación al usuario.
+            alert("El lote ha sido marcado como entregado.");
         });
     </script>
+</body>
+
+</html>
+
+   
+
+</body>
+
+</html>
+
+       
+
 
 
 
