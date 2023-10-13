@@ -38,6 +38,7 @@
                         <a href="servicios.html" class="nav-item nav-link">Lotes</a>
                         <a href="contacto.html" class="nav-item nav-link">Vehículos</a>
                         <a href="login.html" class="nav-item nav-link">Almacenes</a>
+                        <a href="profile.html" class="nav-item nav-link">Perfil</a>
                         <a href="login.html" class="nav-item nav-link">Cerrar sesión</a>
                     </div>
                 </div>
@@ -103,7 +104,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <!-- Aquí se mostrarán los datos del formulario para confirmar -->
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -115,9 +116,7 @@
 
     <script>
         $(document).ready(function () {
-            // ... (tu código de inicialización de fecha y validación de peso) ...
-    
-            // Captura el evento de clic en el botón "Guardar"
+
             $("#openConfirmationModal").on("click", function () {
                 // Recopila los datos del formulario
                 var almacen = $("#Codigo").val();
@@ -127,8 +126,7 @@
                 var departamento = $("#Departamento").val();
                 var localidad = $("#Localidad").val();
                 var direccion = $("#Dirección").val();
-    
-                // Construye el mensaje de confirmación
+
                 var confirmationMessage = `
                     <p><strong>Almacén:</strong> ${almacen}</p>
                     <p><strong>Fecha:</strong> ${fecha}</p>
@@ -139,10 +137,8 @@
                     <p><strong>Dirección:</strong> ${direccion}</p>
                 `;
     
-                // Muestra los datos en el modal de confirmación
                 $("#confirmationData").html(confirmationMessage);
     
-                // Abre el modal de confirmación
                 $("#confirmationModal").modal("show");
             });
         });
