@@ -196,4 +196,25 @@ img.animated.pulse {
     padding-right:0;
     border-right:none
 }
+.badge-success {
+    background-color: #00a606;
+    color: #fff;
+} 
+.badge-inprogress {
+    background-color: #e39036;
+    color: #fff;
+} 
+.badge-pending {
+    background-color: #e62a2a;
+    color: #fff;
+} 
+.reset-button {
+    font-size: 14px;
+} 
+#searchInput, label, select, #filterStatus, #resetFiltersButton {
+    margin-right: 8px;
+}
+
+
+
 
