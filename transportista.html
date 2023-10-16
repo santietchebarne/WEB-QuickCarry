@@ -25,8 +25,7 @@
                 <a href="index.html" class="navbar-brand mx-auto">
                     <img class="img-fluid animated pulse infinite mt-2" src="img/logoblank.png" alt="" width="140">
                 </a>
-                <button type="button" class="navbar-toggler ms-auto me-0" data-bs-toggle="collapse"
-                    data-bs-target="#navbarCollapse">
+                <button type="button" class="navbar-toggler ms-auto me-0" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse mt-2" id="navbarCollapse">
@@ -47,15 +46,35 @@
 
     <div class="container mt-5">
         <h2 class="text-center">Información de Producto</h2>
-        <div class="product-info">
-            <p><strong>Código del Producto:</strong> PRODUCTO001</p>
-            <p><strong>Fecha:</strong> 2023-10-15</p>
-            <p><strong>Estado:</strong> En Camino</p>
-            <p><strong>Destino:</strong> Destino A</p>
-            <p><strong>Ruta Asignada:</strong> Ruta 123</p>
-            <p><strong>Peso del Lote:</strong> 500 kg</p>
-            <!-- Botón para marcar como entregado -->
-            <button id="marcarEntregado" class="btn btn-success">Marcar como Entregado</button>
+        <table class="table table-bordered">
+            <tr>
+                <th>Código del Producto</th>
+                <td>PRODUCTO001</td>
+            </tr>
+            <tr>
+                <th>Fecha</th>
+                <td>2023-10-15</td>
+            </tr>
+            <tr>
+                <th>Estado</th>
+                <td>En Camino</td>
+            </tr>
+            <tr>
+                <th>Destino</th>
+                <td>Destino A</td>
+            </tr>
+            <tr>
+                <th>Ruta Asignada</th>
+                <td>Ruta 123</td>
+            </tr>
+            <tr>
+                <th>Peso del Lote</th>
+                <td>500 kg</td>
+            </tr>
+        </table>
+        <!-- Botón para marcar como entregado -->
+      <div class="text-center">
+        <button id="marcarEntregado" class="btn btn-success">Marcar como Entregado</button>
         </div>
     </div>
 
