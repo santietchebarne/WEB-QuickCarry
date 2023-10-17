@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Crear lote</title>
+    <title>Lotes</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -98,9 +98,8 @@
 
 
     <div class="container py-4">
-        <h2>Crear lote</h2>
-        <a>Para crear un lote, te aconsejamos que primero utilices los filtros. Luego de seleccionar los productos que
-            deben ir en el lote, debes clickear en Crear lote para que esos productos se agreguen.</a>
+        <h2>Lotes</h2>
+        <a>Aquí podés ver los lotes y el estado de cada uno.</a>
         <div class="filters py-5"> <!--Filtros de la tabla-->
             <h6>Buscar por ID: <input type="text" id="searchInput">
                 <label>Almacén</label>
@@ -172,16 +171,54 @@
                     <th scope="col">Peso</th>
                     <th scope="col">Destino</th>
                     <th scope="col">Estado</th>
+                    <th scope="col"></th>
                 </tr>
             </thead>
 
             <tbody id="tableBody">
-                <!-- en teoria se mostrarian aca los productos de la tabla, hay que filtrar y solo mostrar los 
-                    que no tienen un lote ya asignado o fueron entregados.-->
+
             </tbody>
         </table>
+        <div class="text-end">
+            <button id="crearLoteButton" class="btn btn-primary mt-3 text-end">Crear lote</button>
+        </div>
     </div>
     </div>
+
+    <script>
+        $(document).ready(function () {
+            // Manejador de eventos para el botón "Crear lote"
+            $('#crearLoteButton').on('click', function () {
+                // Redirige a la página "crearlote.html" cuando se hace clic en el botón
+                window.location.href = 'crearlote.html';
+            });
+
+            $('#searchInput, #filterAlmacen, #filterDepartamento, #filterStatus').on('input', function () {
+                // ... (código para filtrar la tabla)
+            });
+
+            $('#resetFiltersButton').on('click', function () {
+                // ... (código para restablecer filtros)
+            });
+        });
+    </script>
+
+<script>
+    $(document).ready(function () {
+
+        $.get("http://localhost:8000/api/almacen", function (data) {
+
+            $("#Almacen").empty();
+
+            $.each(data, function (index, almacen) {
+                $("#Almacen").append($('<option>', {
+                    value: almacen.id,
+                    text: almacen.nombre
+                }));
+            });
+        });
+    });
+</script>
 
     <div class="container-fluid bg-white footer mt-5">
         <div class="container wow fadeIn" data-wow-delay="0.1s">

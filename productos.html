@@ -36,7 +36,7 @@
                 <div class="collapse navbar-collapse mt-2" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
                         <a href="productos.html" class="nav-item nav-link active">Productos</a>
-                        <a href="crearlote.html" class="nav-item nav-link">Lotes</a>
+                        <a href="lote.html" class="nav-item nav-link">Lotes</a>
                         <a href="contacto.html" class="nav-item nav-link">Vehículos</a>
                         <a href="login.html" class="nav-item nav-link">Almacenes</a>
                         <a href="profile.html" class="nav-item nav-link">Perfil</a>
@@ -48,44 +48,6 @@
     </div>
 
     <div class="container-fluid newsletter bg-primary hero-header py-5"></div>
-
-    <div class="container-fluid py-5">
-        <div class="container">
-            <div class="row g-4">
-                <div class="col-lg-4 wow fadeIn" data-wow-delay="0.1s">
-                    <a href="agregarproducto.html">
-                        <div class="contact-info-item position-relative bg-primary text-center p-2">
-                            <div class="border py-2 px-2">
-                                <i class="fas fa-cube fa-3x text-dark mb-4"></i>
-                                <h5 class="text-white">Agregar productos</h5>
-                            </div>
-                    </a>
-                </div>
-            </div>
-
-            <div class="col-lg-4 wow fadeIn" data-wow-delay="0.3s">
-                <div class="contact-info-item position-relative bg-primary text-center p-2">
-                    <a href="crearlote.html">
-                        <div class="border py-2 px-2">
-                            <i class="fas fa-cubes fa-3x text-dark mb-4"></i>
-                            <h5 class="text-white">Crear lotes</h5>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <div class="col-lg-4 wow fadeIn" data-wow-delay="0.5s">
-                <div class="contact-info-item position-relative bg-primary text-center p-2">
-                    <a href="loginadmin.html">
-                        <div class="border py-2 px-2">
-                            <i class="fas fa-car-alt fa-3x text-dark mb-4"></i>
-                            <h5 class="text-white">Ver vehículos</h5>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-    </div>
 
     <div class="container py-2">
         <h2>Productos</h2>
@@ -151,8 +113,10 @@
 
         </div>
         </h6>
-        <table class="table">
-
+        <table class="table mt-4">
+            <div class="text-end">
+                <button id="agregarProductoButton" class="btn btn-primary mt-3 text-end">Agregar producto</button>
+            </div>
             <thead>
                 <tr>
                     <th scope="col">ID</th>
@@ -171,6 +135,19 @@
         </table>
     </div>
     </div>
+
+    <script>
+        $(document).ready(function () {
+            // Manejador de eventos para el botón "Agregar producto"
+            $('#agregarProductoButton').on('click', function () {
+                // Redirige a la página "agregarproducto.php" cuando se hace clic en el botón
+                window.location.href = 'agregarproducto.html';
+            });
+    
+            // Otros manejadores de eventos y código relacionado...
+        });
+    </script>
+
 
     <script>
         // Función para llenar la tabla con datos de la API

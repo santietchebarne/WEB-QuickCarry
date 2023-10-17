@@ -59,7 +59,6 @@
                 url: apiUrlAlmacen,
                 type: 'GET',
                 success: function (dataAlmacen) {
-
                     dataAlmacen.forEach(function (almacen) {
                         almacenData[almacen.id] = almacen.nombre;
                     });
@@ -75,20 +74,23 @@
                             $('#tableBody').empty();
     
                             filteredData.forEach(function (producto) {
-                                var uniqueCheckboxId = 'checkbox_' + producto.id;
+                                // Filtra solo los productos que no tienen un lote asignado (lote_id es null)
+                                if (producto.lote_id === null) {
+                                    var uniqueCheckboxId = 'checkbox_' + producto.id;
     
-                                var row = '<tr class="table-row" data-id="' + producto.id + '">' +
-                                    '<td><input type="checkbox" class="product-checkbox" name="checkboxName" id="' + uniqueCheckboxId + '"></td>' +
-                                    '<td>' + producto.id + '</td>' +
-                                    '<td>' + almacenData[producto.almacen_id] + '</td>' + // Utiliza el nombre del almacén
-                                    '<td>' + producto.fecha_entrega + '</td>' +
-                                    '<td>' + producto.peso + ' Kg</td>' +
-                                    '<td>' + producto.departamento + '</td>' +
-                                    '<td><span class="badge badge-success">' + producto.estado + '</span></td>' +
-                                    '<td><a class="detail-link" data-id="' + producto.id + '"><i class="bi bi-eye"></i></a></td>' +
-                                    '</tr>';
+                                    var row = '<tr class="table-row" data-id="' + producto.id + '">' +
+                                        '<td><input type="checkbox" class="product-checkbox" name="checkboxName" id="' + uniqueCheckboxId + '"></td>' +
+                                        '<td>' + producto.id + '</td>' +
+                                        '<td>' + almacenData[producto.almacen_id] + '</td>' +
+                                        '<td>' + producto.fecha_entrega + '</td>' +
+                                        '<td>' + producto.peso + ' Kg</td>' +
+                                        '<td>' + producto.departamento + '</td>' +
+                                        '<td><span class="badge badge-success">' + producto.estado + '</span></td>' +
+                                        '<td><a class="detail-link" data-id="' + producto.id + '"><i class="bi bi-eye"></i></a></td>' +
+                                        '</tr>';
     
-                                $('#tableBody').append(row);
+                                    $('#tableBody').append(row);
+                                }
                             });
                         },
                         error: function (error) {
@@ -100,8 +102,35 @@
                     console.error('Error al cargar los datos del almacén:', error);
                 }
             });
+    
+            // Manejar el evento del botón "Crear Lote"
+            $('#crearLoteButton').on('click', function () {
+                var selectedProductIDs = [];
+    
+                // Recopila los IDs de los productos seleccionados
+                $('.product-checkbox:checked').each(function () {
+                    selectedProductIDs.push($(this).closest('tr').data('id'));
+                });
+    
+                // Crea el objeto postData con los datos del lote
+                var postData = {
+                    "creador_id": 2,
+                    "almacen_destino": $("#Almacen").val(),
+                    "estado": "Creado",
+                    "idsProductos": selectedProductIDs,
+                    "idsProductos.*": "1"
+                };
+    
+                // Registrar lo que se envía a la API con POST
+                console.log("Datos enviados a la API con POST:", postData);
+    
+                // Realizar una solicitud POST a la API con los datos del lote
+                // Agrega aquí el código para enviar la solicitud POST a tu API
+            });
         });
     </script>
+    
+    
 
     <div class="container py-4">
         <h2>Crear lote</h2>
@@ -195,8 +224,17 @@
 
     <script>
         $(document).ready(function () {
-
             var selectedProducts = [];
+
+            // Evento de clic para el botón "Iniciar lote"
+            $('#crearLoteButton').on('click', function () {
+                // Crear un array con los IDs de los productos seleccionados
+                var selectedProductIDs = selectedProducts;
+
+                // Redirigir a detallelote.html con el array de IDs como parámetro
+                var queryString = selectedProductIDs.length > 0 ? '?selectedIDs=' + selectedProductIDs.join(',') : '';
+                window.location.href = 'detallelote.html' + queryString;
+            });
 
             $(document).on('click', '.table-row', function () {
                 var productId = $(this).data('id');
@@ -215,14 +253,9 @@
                 }
             });
 
-
-            $('#resetFiltersButton').on('click', function () {
-                selectedProducts = [];
-                $('#crearLoteButton').prop('disabled', true);
-            });
         });
-
     </script>
+
 
     <div class="container-fluid bg-white footer mt-2">
         <div class="container wow fadeIn" data-wow-delay="0.1s">
