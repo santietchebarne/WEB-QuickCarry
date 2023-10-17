@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Principal Funcionario</title>
+    <title>Crear Lote</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -35,9 +35,8 @@
                 </button>
                 <div class="collapse navbar-collapse mt-2" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
-                        <a href="index.html" class="nav-item nav-link">Inicio</a>
-                        <a href="about.html" class="nav-item nav-link">Productos</a>
-                        <a href="servicios.html" class="nav-item nav-link active">Lotes</a>
+                        <a href="productos.html" class="nav-item nav-link">Productos</a>
+                        <a href="crearlote.html" class="nav-item nav-link active">Lotes</a>
                         <a href="contacto.html" class="nav-item nav-link">Vehículos</a>
                         <a href="login.html" class="nav-item nav-link">Almacenes</a>
                         <a href="profile.html" class="nav-item nav-link">Perfil</a>
@@ -52,93 +51,70 @@
 
     <script>
         $(document).ready(function () {
-
-            var apiUrl = 'http://localhost:8000/api/producto';
-
+            var apiUrlAlmacen = 'http://localhost:8000/api/almacen';
+            var apiUrlProducto = 'http://localhost:8000/api/producto';
+            var almacenData = {};
+    
             $.ajax({
-                url: apiUrl,
+                url: apiUrlAlmacen,
                 type: 'GET',
-                success: function (data) {
+                success: function (dataAlmacen) {
 
-                    $('#tableBody').empty();
-
-                    data.forEach(function (producto) {
-
-                        if (producto.estado === "En espera" || producto.estado === "Almacenado") {
-                            $('#tableBody').append(`
-                            <tr>
-                                <td>${producto.id}</td>
-                                <td>${producto.almacen_id}</td>
-                                <td>${producto.fecha_entrega}</td>
-                                <td>${producto.peso}</td>
-                                <td>${producto.departamento}</td>
-                                <td>${producto.estado}</td>
-                                <td></td>
-                            </tr>
-                        `);
+                    dataAlmacen.forEach(function (almacen) {
+                        almacenData[almacen.id] = almacen.nombre;
+                    });
+    
+                    $.ajax({
+                        url: apiUrlProducto,
+                        type: 'GET',
+                        success: function (dataProducto) {
+                            var filteredData = dataProducto.filter(function (producto) {
+                                return producto.estado === "En espera" || producto.estado === "Almacenado";
+                            });
+    
+                            $('#tableBody').empty();
+    
+                            filteredData.forEach(function (producto) {
+                                var uniqueCheckboxId = 'checkbox_' + producto.id;
+    
+                                var row = '<tr class="table-row" data-id="' + producto.id + '">' +
+                                    '<td><input type="checkbox" class="product-checkbox" name="checkboxName" id="' + uniqueCheckboxId + '"></td>' +
+                                    '<td>' + producto.id + '</td>' +
+                                    '<td>' + almacenData[producto.almacen_id] + '</td>' + // Utiliza el nombre del almacén
+                                    '<td>' + producto.fecha_entrega + '</td>' +
+                                    '<td>' + producto.peso + ' Kg</td>' +
+                                    '<td>' + producto.departamento + '</td>' +
+                                    '<td><span class="badge badge-success">' + producto.estado + '</span></td>' +
+                                    '<td><a class="detail-link" data-id="' + producto.id + '"><i class="bi bi-eye"></i></a></td>' +
+                                    '</tr>';
+    
+                                $('#tableBody').append(row);
+                            });
+                        },
+                        error: function (error) {
+                            console.error('Error al cargar los productos:', error);
                         }
                     });
                 },
                 error: function (error) {
-                    console.error('Error al cargar los productos:', error);
+                    console.error('Error al cargar los datos del almacén:', error);
                 }
             });
         });
     </script>
 
-    <script>
-        $(document).ready(function () {
-
-            function listarProductos() {
-                $.ajax({
-                    url: 'http://localhost:8000/api/producto',
-                    type: 'GET',
-                    success: function (productos) {
-                        $('#tableBody').empty();
-
-                        productos.forEach(function (producto) {
-                            var row = '<tr class="table-row" data-id="' + producto.id + '">' +
-                                '<td><input type="checkbox" class="product-checkbox"></td>' +
-                                '<td>' + producto.id + '</td>' +
-                                '<td>' + producto.almacen_id + '</td>' +
-                                '<td>' + producto.fecha_entrega + '</td>' +
-                                '<td>' + producto.peso + ' Kg</td>' +
-                                '<td>' + producto.departamento + '</td>' +
-                                '<td><span class="badge badge-success">' + producto.estado + '</span></td>' +
-                                '<td><a class="detail-link" data-id="' + producto.id + '"><i class="bi bi-eye"></i></a></td>' +
-                                '</tr>';
-
-                            $('#tableBody').append(row);
-                        });
-
-                        $(document).on('click', '.detail-link', function () {
-                            var productId = $(this).data('id');
-                            window.location.href = 'detalleproducto.html?id=' + productId;
-                        });
-
-                    },
-                    error: function (error) {
-                        console.error(error);
-                    }
-                });
-            }
-
-            listarProductos();
-
-        });
-    </script>
-
-
     <div class="container py-4">
         <h2>Crear lote</h2>
-        <a>Para crear un lote, selecciona al menos un producto. 
+        <a>Para crear un lote, selecciona al menos un producto.
             <br>Luego debes seleccionar <b>Crear lote</b> para que esos productos se agreguen en un nuevo lote.</a>
-        <div class="filters py-5"> <!--Filtros de la tabla-->
-            <h6>Buscar por ID: <input type="text" id="searchInput">
-                <label>Almacén</label>
+        <div class="filters py-5">
+            <h6><label for="searchInput">Buscar por ID:</label>
+                <input type="text" id="searchInput">
+
+                <label for="filterAlmacen">Almacén</label>
                 <select id="filterAlmacen">
                     <option value="todos">Todos</option>
-                    <option value="Central">Central</option>
+                    <option value="Almacen Montevideo">Central</option>
                     <option value="Artigas">Artigas</option>
                     <option value="Canelones">Canelones</option>
                     <option value="Cerro Largo">Cerro Largo</option>
@@ -152,14 +128,14 @@
                     <option value="Río Negro">Río Negro</option>
                     <option value="Rivera">Rivera</option>
                     <option value="Rocha">Rocha</option>
-                    <option value="Salto">Salto</option>
+                    <option value="Almacen Salto">Salto</option>
                     <option value="San José">San José</option>
                     <option value="Soriano">Soriano</option>
-                    <option value="Tacuarembó">Tacuarembó</option>
+                    <option value="Almacen Tacuárembo">Tacuarembó</option>
                     <option value="Treinta y Tres">Treinta y Tres</option>
                 </select>
 
-                <label>Departamento</label>
+                <label for="filterDepartamento">Departamento:</label>
                 <select id="filterDepartamento">
                     <option value="todos">Todos</option>
                     <option value="Artigas">Artigas</option>
@@ -183,17 +159,14 @@
                     <option value="Treinta y Tres">Treinta y Tres</option>
                 </select>
 
-                <label>Estado</label>
+                <label for="filterStatus">Estado</label>
                 <select id="filterStatus">
                     <option value="todos">Todos</option>
                     <option value="En espera">En espera</option>
                     <option value="Almacenado">Almacenado</option>
                 </select>
-
-                <button class="btn btn-link py-0 reset-button" id="resetFiltersButton">Restablecer</button>
-                
+            </h6>
         </div>
-        </h6>
         <table class="table">
             <thead>
                 <tr>
@@ -214,13 +187,11 @@
             </tbody>
         </table>
         <div class="text-end">
-            <button id="crearLoteButton" class="btn btn-primary mt-3 text-end" disabled>Crear lote</button>
+            <button id="crearLoteButton" class="btn btn-primary mt-3 text-end" disabled>Iniciar lote</button>
         </div>
-        
-    </div>
-    </div>
 
-    
+    </div>
+    </div>
 
     <script>
         $(document).ready(function () {
@@ -253,8 +224,6 @@
 
     </script>
 
-
-
     <div class="container-fluid bg-white footer mt-2">
         <div class="container wow fadeIn" data-wow-delay="0.1s">
             <div class="copyright">
@@ -278,22 +247,23 @@
 
     <script>
         $(document).ready(function () {
+            var selectedProducts = [];
 
-            $('#searchInput, #filterAlmacen, #filterDepartamento, #filterStatus').on('input', function () {
-                const searchText = $('#searchInput').val().toLowerCase();
-                const almacenText = $('#filterAlmacen').val();
-                const departamentoText = $('#filterDepartamento').val();
-                const selectedStatus = $('#filterStatus').val();
-
+            function applyFilters(searchText, almacenText, departamentoText, selectedStatus) {
                 $('#tableBody tr').each(function () {
-                    const idText = $(this).find('th').text();
-                    const statusText = $(this).find('td:eq(5) span').text();
-                    const id = parseInt(idText);
-                    const almacen = $(this).find('td:eq(1)').text();
-                    const departamento = $(this).find('td:eq(4)').text().toLowerCase();
+                    const idText = $(this).find('td:eq(1)').text();
+                    const statusText = $(this).find('td:eq(6) span').text();
+                    const almacen = $(this).find('td:eq(2)').text();
+                    const departamento = $(this).find('td:eq(5)').text().toLowerCase();
+
+                    let id = parseInt(idText, 10);
+
+                    if (isNaN(id) || idText === '') {
+                        id = NaN;
+                    }
 
                     if (
-                        (isNaN(id) || id === '' || id === 0 || id === null || id === undefined || idText.includes(searchText)) &&
+                        (isNaN(id) || idText.includes(searchText)) &&
                         (almacenText === 'todos' || almacen === almacenText) &&
                         (departamentoText === 'todos' || departamento.includes(departamentoText.toLowerCase())) &&
                         (selectedStatus === 'todos' || statusText === selectedStatus)
@@ -307,19 +277,54 @@
                 if (searchText === '' && almacenText === 'todos' && departamentoText === 'todos' && selectedStatus === 'todos') {
                     $('#tableBody tr').show();
                 }
+            }
+
+            $(document).on('click', '.table-row', function () {
+                var productId = $(this).data('id');
+                var isChecked = $(this).find('.product-checkbox').prop('checked');
+
+                if (isChecked) {
+                    selectedProducts.push(productId);
+                } else {
+                    selectedProducts = selectedProducts.filter(id => id !== productId);
+                }
+
+                if (selectedProducts.length >= 2) {
+                    $('#crearLoteButton').prop('disabled', false);
+                } else {
+                    $('#crearLoteButton').prop('disabled', true);
+                }
+            });
+
+            $('#searchInput, #filterAlmacen, #filterDepartamento, #filterStatus').on('input', function () {
+                const searchText = $('#searchInput').val().toLowerCase();
+                const almacenText = $('#filterAlmacen').val();
+                const departamentoText = $('#filterDepartamento').val();
+                const selectedStatus = $('#filterStatus').val();
+
+                applyFilters(searchText, almacenText, departamentoText, selectedStatus);
             });
 
             $('#resetFiltersButton').on('click', function () {
-                $('#searchInput').val('');
-                $('#filterAlmacen').val('todos');
-                $('#filterDepartamento').val('todos');
-                $('#filterStatus').val('todos');
+                selectedProducts = [];
+                $('#crearLoteButton').prop('disabled', true);
+
+                var searchText = $('#searchInput').val().toLowerCase();
+                var almacenText = $('#filterAlmacen').val();
+                var departamentoText = $('#filterDepartamento').val();
+                var selectedStatus = $('#filterStatus').val();
 
                 $('#tableBody tr').show();
+
+                $('#searchInput').val(searchText);
+                $('#filterAlmacen').val(almacenText);
+                $('#filterDepartamento').val(departamentoText);
+                $('#filterStatus').val(selectedStatus);
+
+                applyFilters(searchText, almacenText, departamentoText, selectedStatus);
             });
         });
     </script>
-
 
 </body>
 

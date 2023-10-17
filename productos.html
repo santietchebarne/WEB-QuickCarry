@@ -35,9 +35,8 @@
                 </button>
                 <div class="collapse navbar-collapse mt-2" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
-                        <a href="index.html" class="nav-item nav-link">Inicio</a>
-                        <a href="about.html" class="nav-item nav-link active">Productos</a>
-                        <a href="servicios.html" class="nav-item nav-link">Lotes</a>
+                        <a href="productos.html" class="nav-item nav-link active">Productos</a>
+                        <a href="crearlote.html" class="nav-item nav-link">Lotes</a>
                         <a href="contacto.html" class="nav-item nav-link">Vehículos</a>
                         <a href="login.html" class="nav-item nav-link">Almacenes</a>
                         <a href="profile.html" class="nav-item nav-link">Perfil</a>
@@ -66,7 +65,7 @@
 
             <div class="col-lg-4 wow fadeIn" data-wow-delay="0.3s">
                 <div class="contact-info-item position-relative bg-primary text-center p-2">
-                    <a href="logintransportista.html">
+                    <a href="crearlote.html">
                         <div class="border py-2 px-2">
                             <i class="fas fa-cubes fa-3x text-dark mb-4"></i>
                             <h5 class="text-white">Crear lotes</h5>
@@ -162,62 +161,73 @@
                     <th scope="col">Peso</th>
                     <th scope="col">Departamento</th>
                     <th scope="col">Estado</th>
+                    <th scope="col">Lote</th>
                 </tr>
             </thead>
 
             <tbody id="tableBody">
-                <tr>
-                    <th scope="row">1</th>
-                    <td>12/10/2023</td>
-                    <td>Colonia</td>
-                    <td>1,38 Kg</td>
-                    <td>Colonia</td>
-                    <td><span class="badge badge-success">Entregado</span></td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>12/10/2023</td>
-                    <td><span>Soriano</span></td>
-                    <td>2,15 Kg</td>
-                    <td>Soriano</td>
-                    <td><span class="badge badge-success">Entregado</span></td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td>16/10/2023</td>
-                    <td>Central</td>
-                    <td>0,87 Kg</td>
-                    <td>Canelones</td>
-                    <td><span class="badge badge-inprogress">En curso</span></td>
-                </tr>
-                <tr>
-                    <th scope="row">4</th>
-                    <td>16/10/2023</td>
-                    <td>Central</td>
-                    <td>1,41 Kg</td>
-                    <td>Paysandú</td>
-                    <td><span class="badge badge-inprogress">En curso</span></td>
-                </tr>
-                <tr>
-                    <th scope="row">5</th>
-                    <td>17/10/2023</td>
-                    <td>Central</td>
-                    <td>3,37 Kg</td>
-                    <td>Tacuarembó</td>
-                    <td><span class="badge badge-pending">Pendiente</span></td>
-                </tr>
-                <tr>
-                    <th scope="row">6</th>
-                    <td>17/10/2023</td>
-                    <td>Central</td>
-                    <td>5,03 Kg</td>
-                    <td>Rocha</td>
-                    <td><span class="badge badge-pending">Pendiente</span></td>
-                </tr>
+         
             </tbody>
         </table>
     </div>
     </div>
+
+    <script>
+        // Función para llenar la tabla con datos de la API
+        function llenarTabla() {
+            // Realiza una solicitud AJAX GET al punto final de la API
+            $.ajax({
+                url: "http://localhost:8000/api/producto",
+                method: "GET",
+                dataType: "json",
+                success: function (data) {
+                    // Limpia las filas existentes de la tabla
+                    $('#tableBody').empty();
+    
+                    // Recorre los datos recibidos y agrega filas a la tabla
+                    $.each(data, function (index, producto) {
+                        $('#tableBody').append(
+                            '<tr>' +
+                            '<th scope="row">' + producto.id + '</th>' +
+                            '<td>' + producto.fecha_entrega + '</td>' +
+                            '<td>' + producto.almacen_id + '</td>' +
+                            '<td>' + producto.peso + ' Kg</td>' +
+                            '<td>' + producto.departamento + '</td>' +
+                            '<td>' +
+                            '<span class="badge badge-' + getClassEstado(producto.estado) + '">' + producto.estado + '</span>' +
+                            '</td>' +
+                            '<td>' + (producto.lote_id ? producto.lote_id : '') + '</td>' +
+                            '</tr>'
+                        );
+                    });
+                },
+                error: function (error) {
+                    console.log("Error al cargar datos de la API: " + error);
+                }
+            });
+        }
+    
+        // Función auxiliar para determinar la clase de distintivo apropiada según el estado
+        function getClassEstado(estado) {
+            switch (estado) {
+                case "Entregado":
+                    return "success";
+                case "En espera":
+                    return "inprogress";
+                case "Pendiente":
+                    return "pending";
+                default:
+                    return "secondary";
+            }
+        }
+    
+        // Llama a la función llenarTabla para cargar datos al cargar la página
+        $(document).ready(function () {
+            llenarTabla();
+        });
+    </script>
+    
+    
 
     <div class="container-fluid bg-white footer mt-5">
         <div class="container wow fadeIn" data-wow-delay="0.1s">

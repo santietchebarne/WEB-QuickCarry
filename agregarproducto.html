@@ -10,7 +10,9 @@
     <link href="img/favicon.ico" rel="icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&family=Poppins:wght@200;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&family=Poppins:wght@200;600;700&display=swap"
+        rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -33,8 +35,7 @@
                 </button>
                 <div class="collapse navbar-collapse mt-2" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
-                        <a href="index.html" class="nav-item nav-link">Inicio</a>
-                        <a href="about.html" class="nav-item nav-link active">Productos</a>
+                        <a href="productos.html" class="nav-item nav-link active">Productos</a>
                         <a href="servicios.html" class="nav-item nav-link">Lotes</a>
                         <a href="contacto.html" class="nav-item nav-link">Vehículos</a>
                         <a href="login.html" class="nav-item nav-link">Almacenes</a>
@@ -47,11 +48,30 @@
     </div>
     <div class="container-fluid newsletter bg-primary hero-header py-5"></div>
 
+    <script>
+        $(document).ready(function () {
+
+            $.get("http://localhost:8000/api/almacen", function (data) {
+
+                $("#Almacen").empty();
+
+                $.each(data, function (index, almacen) {
+                    $("#Almacen").append($('<option>', {
+                        value: almacen.id,
+                        text: almacen.nombre
+                    }));
+                });
+            });
+        });
+    </script>
+
     <div class="container mt-5">
         <h2 class="text-center">Agregar nuevo producto:</h2>
         <form class="col-md-6 mt-5 mx-auto">
             <label>Almacén:</label>
-            <input type="text" class="form-control mt-1" id="Codigo">
+            <select class="form-control mt-1" id="Almacen">
+
+            </select>
             <label>Fecha:</label>
             <input type="text" class="form-control mt-1" id="Fecha">
             <label>Peso:</label>
@@ -90,11 +110,11 @@
             <label>Dirección:</label>
             <input type="text" class="form-control mt-1" id="Dirección">
             <button class="btn btn-primary w-100 py-2 mt-4" type="button" id="openConfirmationModal">Guardar</button>
-            <button class="btn btn-outline-primary w-100 py-2 mt-4" type="button">Volver</button>
         </form>
     </div>
 
-    <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+    <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -108,74 +128,104 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                    <button type="button" class="btn btn-primary" id="confirmSave">Guardar</button>
+                    <button type="button" class="btn btn-primary" id="confirmarProducto">Confirmar</button>
                 </div>
             </div>
         </div>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
     <script>
         $(document).ready(function () {
+            var datosProducto = {}; // Inicializa un objeto para almacenar los datos del producto
 
             $("#openConfirmationModal").on("click", function () {
-                // Recopila los datos del formulario
-                var almacen = $("#Codigo").val();
-                var fecha = $("#Fecha").val();
-                var estado = $("#Estado").val();
-                var peso = $("#Peso").val();
-                var departamento = $("#Departamento").val();
+                // Recopila los datos del formulario y construye datosProducto
+                datosProducto.almacen_id = parseInt($("#Almacen").val());
+                datosProducto.estado = "En espera"; // Estado por defecto
+                datosProducto.peso = parseFloat($("#Peso").val());
+                datosProducto.departamento = $("#Departamento").val();
                 var localidad = $("#Localidad").val();
                 var direccion = $("#Dirección").val();
+                datosProducto.fecha_entrega = $("#Fecha").val();
+                datosProducto.direccion_entrega = localidad + " - " + direccion;
 
-                var confirmationMessage = `
-                    <p><strong>Almacén:</strong> ${almacen}</p>
-                    <p><strong>Fecha:</strong> ${fecha}</p>
-                    <p><strong>Estado:</strong> ${estado}</p>
-                    <p><strong>Peso:</strong> ${peso}</p>
-                    <p><strong>Departamento:</strong> ${departamento}</p>
-                    <p><strong>Localidad:</strong> ${localidad}</p>
-                    <p><strong>Dirección:</strong> ${direccion}</p>
-                `;
-    
-                $("#confirmationData").html(confirmationMessage);
-    
-                $("#confirmationModal").modal("show");
+                // Agrega un console.log para ver lo que se envía a la API
+                console.log("Datos enviados a la API:", JSON.stringify(datosProducto));
+
+                // Muestra el Toast de confirmación
+                mostrarToast("Guardando producto...");
+
+                // Realiza una solicitud POST a la API
+                $.ajax({
+                    type: "POST",
+                    url: "http://localhost:8000/api/producto",
+                    data: JSON.stringify(datosProducto),
+                    contentType: "application/json",
+                    success: function (response) {
+                        // Verifica el código de estado de la respuesta
+                        if (response.status === 200 || response.status === 201) {
+                            // Muestra un mensaje de éxito al usuario
+                            mostrarToast("Producto guardado con éxito. Fecha y hora: " + formatearFechaYHora(new Date()), "success");
+                        } else {
+                            // Muestra un mensaje de error al usuario
+                            mostrarToast("Error al guardar el producto.", "error");
+                        }
+                    },
+                    error: function (error) {
+                        // Maneja errores en la solicitud, si es necesario
+                        console.error("Error al guardar el producto:", error);
+                        // Muestra un mensaje de error al usuario
+                        mostrarToast("Error al guardar el producto.", "error");
+                    }
+                });
             });
+
+            function mostrarToast(mensaje, tipo = "info") {
+                // Implementa aquí la lógica para mostrar el mensaje de Toast
+            }
+
+            // Función para dar formato a la fecha y hora
+            function formatearFechaYHora(fecha) {
+                return moment(fecha).format("YYYY-MM-DD");
+            }
         });
     </script>
+
 
     <script>
         $(document).ready(function () {
             $.datepicker.setDefaults($.datepicker.regional["es"]);
             $("#Fecha").datepicker({
-                dateFormat: 'dd/mm/yy',
+                dateFormat: 'yy/mm/dd',
                 minDate: 1,
             });
         });
     </script>
 
-<script>
-    function validarPeso() {
-        var pesoInput = document.getElementById("Peso");
-        var pesoValor = parseFloat(pesoInput.value);
-        var errorMensaje = document.getElementById("errorPeso");
+    <script>
+        function validarPeso() {
+            var pesoInput = document.getElementById("Peso");
+            var pesoValor = parseFloat(pesoInput.value);
+            var errorMensaje = document.getElementById("errorPeso");
 
-        if (pesoInput.value.trim() === "") {
-            pesoInput.classList.remove("input-error");
-            errorMensaje.style.display = "none";
-        } else if (isNaN(pesoValor) || pesoValor <= 0) {
-            pesoInput.classList.add("input-error");
-            errorMensaje.style.display = "block"; 
-            pesoInput.focus(); 
-        } else {
-            pesoInput.classList.remove("input-error");
-            errorMensaje.style.display = "none";
+            if (pesoInput.value.trim() === "") {
+                pesoInput.classList.remove("input-error");
+                errorMensaje.style.display = "none";
+            } else if (isNaN(pesoValor) || pesoValor <= 0) {
+                pesoInput.classList.add("input-error");
+                errorMensaje.style.display = "block";
+                pesoInput.focus();
+            } else {
+                pesoInput.classList.remove("input-error");
+                errorMensaje.style.display = "none";
+            }
         }
-    }
 
-    document.getElementById("Peso").addEventListener("blur", validarPeso);
-</script>  
-    
+        document.getElementById("Peso").addEventListener("blur", validarPeso);
+    </script>
+
     <script>
         $(document).ready(function () {
             var localidadesPorDepartamento = {
@@ -222,12 +272,26 @@
         });
     </script>
 
+    <div id="toast-container" class="toast-container position-absolute top-0 end-0 p-3">
+        <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <strong class="me-auto">Notificación</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Cerrar"></button>
+            </div>
+            <div class="toast-body">
+                <!-- Contenido del mensaje de notificación -->
+            </div>
+        </div>
+    </div>
+
+
     <div class="container-fluid bg-white footer mt-5">
         <div class="container wow fadeIn" data-wow-delay="0.1s">
             <div class="copyright">
                 <div class="row">
                     <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                        &copy; <a href="https://www.sersolutions.com" class="border-bottom" href="#">SER Solutions</a>, Todos los derechos reservados.
+                        &copy; <a href="https://www.sersolutions.com" class="border-bottom" href="#">SER Solutions</a>,
+                        Todos los derechos reservados.
                     </div>
                     <div class="col-md-6 text-center text-md-end">
                         <div class="footer-menu">
@@ -244,4 +308,5 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
+
 </html>
