@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <title>Detalle lote</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+    <link href="img/favicon.ico" rel="icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&family=Poppins:wght@200;600;700&display=swap"
+        rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+</head>
+
+<body>
+    <div class="container-fluid sticky-top">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <a href="index.html" class="navbar-brand mx-auto">
+                    <img class="img-fluid animated pulse infinite mt-2" src="img/logoblank.png" alt="" width="140">
+                </a>
+                <button type="button" class="navbar-toggler ms-auto me-0" data-bs-toggle="collapse"
+                    data-bs-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse mt-2" id="navbarCollapse">
+                    <div class="navbar-nav ms-auto">
+                        <a href="productos.html" class="nav-item nav-link">Productos</a>
+                        <a href="lote.html" class="nav-item nav-link active">Lotes</a>
+                        <a href="contacto.html" class="nav-item nav-link">Vehículos</a>
+                        <a href="login.html" class="nav-item nav-link">Almacenes</a>
+                        <a href="profile.html" class="nav-item nav-link">Perfil</a>
+                        <a href="login.html" class="nav-item nav-link">Cerrar sesión</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <div class="container-fluid newsletter bg-primary hero-header py-5"></div>
+
+    <div class="container py-2">
+        <h2>Crear lote</h2>
+        <p>Debes completar los datos para crear el lote. <br>
+            Es importante que la dirección de entrega del producto, esté cercano al almacen destino que tenga el lote.
+        </p>
+
+        <table class="table mt-4">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Almacén</th>
+                    <th scope="col">Peso</th>
+                    <th scope="col">Departamento</th>
+                    <th scope="col">Dirección</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+            </tbody>
+        </table>
+        <div class="container mt-5">
+            <form class="col-md-6 mt-5">
+                <label for="Almacen">Almacén:</label>
+                <select class="form-control mt-1" id="Almacen"></select>
+            </form>
+        </div>
+        <div class="text-end">
+            <button id="crearLoteButton" class="btn btn-primary mt-3 text-end" data-toggle="modal" data-target="#confirmationModal">Crear lote</button>
+        </div>
+    </div>
+
+    <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Lote Creado</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                El lote se ha creado correctamente.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal"
+                    onclick="location.href='lote.html'">Listo</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script>
+        function getURLParameters(parameterName) {
+            var url = new URL(window.location.href);
+            return url.searchParams.get(parameterName);
+        }
+
+        function getProductDetails(productID) {
+            return $.get("http://localhost:8000/api/producto/" + productID);
+        }
+
+        function llenarTabla(productos) {
+            console.log('Productos recibidos de la API:', productos);
+            $('#tableBody').empty();
+
+            productos.forEach(function (productID) {
+                getProductDetails(productID)
+                    .done(function (producto) {
+                        $.get("http://localhost:8000/api/almacen/" + producto.almacen_id)
+                            .done(function (almacen) {
+                                var detalleURL = 'detalleproducto.html?id=' + producto.id;
+
+                                $('#tableBody').append(
+                                    '<tr>' +
+                                    '<th scope="row">' + producto.id + '</th>' +
+                                    '<td>' + producto.fecha_entrega + '</td>' +
+                                    '<td>' + almacen.nombre + '</td>' +
+                                    '<td>' + producto.peso + ' Kg</td>' +
+                                    '<td>' + producto.departamento + '</td>' +
+                                    '<td>' + producto.direccion_entrega + '</td>' +
+                                    '<td><a href="' + detalleURL + '"><i class="fas fa-arrow-right"></i></a></td>' +
+                                    '</tr>'
+                                );
+                            })
+                            .fail(function (error) {
+                                console.error("Error al obtener el nombre del almacén:", error);
+                            });
+                    })
+                    .fail(function (error) {
+                        console.error("Error al obtener detalles del producto:", error);
+                    });
+            });
+        }
+
+        $(document).ready(function () {
+            var selectedIDs = getURLParameters('selectedIDs');
+
+            if (selectedIDs) {
+                console.log("Productos seleccionados:", selectedIDs);
+                var productIDsList = selectedIDs.split(',');
+                llenarTabla(productIDsList);
+            } else {
+                console.error("No se encontraron IDs de productos seleccionados en la URL.");
+            };
+
+            $.get("http://localhost:8000/api/almacen", function (data) {
+                $("#Almacen").empty();
+                $.each(data, function (index, almacen) {
+                    $("#Almacen").append($('<option>', {
+                        value: almacen.id,
+                        text: almacen.nombre
+                    }));
+                });
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+
+            $("#crearLoteButton").click(function () {
+
+                var almacenSeleccionado = $("#Almacen").val();
+
+                var idsProductos = [];
+                $("#tableBody tr").each(function (index, row) {
+                    var productoID = $(row).find("th").text();
+                    idsProductos.push(parseInt(productoID));
+                });
+
+                var dataToSend = {
+                    "creador_id": 2,
+                    "almacen_destino": almacenSeleccionado,
+                    "estado": "Creado",
+                    "idsProductos": idsProductos,
+                };
+
+                $.ajax({
+                    type: "POST",
+                    url: "http://localhost:8000/api/lote",
+                    data: JSON.stringify(dataToSend),
+                    contentType: "application/json",
+                    success: function (response) {
+
+                        console.log("El Lote fué creado con éxito.", response);
+                    },
+                    error: function (error) {
+                        console.error("No se pudo crear el lote:", error);
+                    }
+                });
+            });
+        });
+
+    </script>
+
+    <script>
+        $(document).ready(function () {
+
+            $.get("http://localhost:8000/api/almacen", function (data) {
+
+                $("#Almacen").empty();
+
+                $.each(data, function (index, almacen) {
+                    $("#Almacen").append($('<option>', {
+                        value: almacen.id,
+                        text: almacen.nombre
+                    }));
+                });
+            });
+        });
+    </script>
+
+    <div class="container-fluid bg-white footer mt-5">
+        <div class="container wow fadeIn" data-wow-delay="0.1s">
+            <div class="copyright">
+                <div class="row">
+                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                        &copy; <a href="https://www.sersolutions.com" class="border-bottom" href="#">SER Solutions</a>,
+                        Todos los derechos reservados.
+                    </div>
+                    <div class="col-md-6 text-center text-md-end">
+                        <div class="footer-menu">
+                            <a href="about.html">Feedback</a>
+                            <a href="contacto.html">Cambiar idioma</a>
+                            <a href="login.html">Cerrar sesión</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

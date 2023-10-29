@@ -81,114 +81,48 @@
                 </select>
             </form>
         </div>
-        <div class="text-end">
-            <button id="crearLoteButton" class="btn btn-primary mt-3 text-end" enable>Crear lote</button>
-        </div>
     </div>
 
-    <!-- ... Tu código HTML existente ... -->
-
-    <script>
-        $(document).ready(function () {
-            var selectedIDs = getURLParameters();
-            llenarTabla(selectedIDs);
-    
-            // Manejar el evento del botón "Crear Lote"
-            $('#crearLoteButton').on('click', function () {
-                var almacenDestino = $('#Almacen').val(); // Obtener el valor seleccionado del almacén
-                var postData = {
-                    "creador_id": 2,
-                    "almacen_destino": almacenDestino,
-                    "estado": "Creado",
-                    "idsProductos": selectedIDs,
-                    "idsProductos.*": "1"
-                };
-    
-                // Registrar lo que se envía a la API con la solicitud POST
-                console.log("Datos enviados a la API con POST:", postData);
-    
-                // Realizar una solicitud POST a la API con los datos
-                $.ajax({
-                    url: "http://localhost:8000/api/lote", // Reemplaza "URL_DE_TU_API" con la URL correcta de tu API
-                    method: "POST",
-                    dataType: "json",
-                    data: JSON.stringify(postData),
-                    contentType: "application/json",
-                    success: function (response) {
-                        // Manejar la respuesta de la API aquí
-                        console.log("Lote creado con éxito:", response);
-                        // Puedes redirigir a otra página o mostrar un mensaje de éxito si lo deseas.
-                    },
-                    error: function (error) {
-                        console.log("Error al crear el lote:", error);
-                        // Manejar errores de la API aquí
-                    }
-                });
+<script>
+    $(document).ready(function () {
+        var loteId = getLoteIdFromURL(); // Obtener el ID de lote desde la URL
+        if (loteId) {
+            // Hacer una solicitud GET a la API con el ID de lote
+            $.get("http://localhost:8000/api/lote/" + loteId + "/productos", function (data) {
+                // Manejar la respuesta de la API
+                llenarTabla(data.productos);
             });
-        });
-    </script>
-
-
-    <script>
-
-        function getURLParameters() {
-            var searchParams = new URLSearchParams(window.location.search);
-            var selectedIDs = searchParams.get("selectedIDs");
-            return selectedIDs ? selectedIDs.split(",") : [];
+        } else {
+            console.log("No se encontró el ID de lote en la URL.");
         }
+    });
 
-        function llenarTabla(selectedIDs) {
-            $.ajax({
-                url: "http://localhost:8000/api/producto",
-                method: "GET",
-                dataType: "json",
-                success: function (data) {
+    // Función para obtener el ID de lote desde la URL
+    function getLoteIdFromURL() {
+        var searchParams = new URLSearchParams(window.location.search);
+        var loteId = searchParams.get("lote_id");
+        return loteId;
+    }
 
-                    $('#tableBody').empty();
+    // Función para llenar la tabla con los productos
+    function llenarTabla(productos) {
+        console.log('Productos recibidos de la API:', productos);
+        $('#tableBody').empty();
 
-                    $.each(data, function (index, producto) {
-                        if (selectedIDs.includes(producto.id.toString())) {
-                            $('#tableBody').append(
-                                '<tr>' +
-                                '<th scope="row">' + producto.id + '</th>' +
-                                '<td>' + producto.fecha_entrega + '</td>' +
-                                '<td>' + producto.almacen_id + '</td>' +
-                                '<td>' + producto.peso + ' Kg</td>' +
-                                '<td>' + producto.departamento + '</td>' +
-                                '<td>' + producto.direccion_entrega + '</td>' +
-                                '</tr>'
-                            );
-                        }
-                    });
-                },
-                error: function (error) {
-                    console.log("Error al cargar datos de la API: " + error);
-                }
-            });
-        }
-
-        $(document).ready(function () {
-            var selectedIDs = getURLParameters();
-            llenarTabla(selectedIDs);
+        $.each(productos, function (index, producto) {
+            $('#tableBody').append(
+                '<tr>' +
+                '<th scope="row">' + producto.id + '</th>' +
+                '<td>' + producto.fecha_entrega + '</td>' +
+                '<td>' + producto.almacen_id + '</td>' +
+                '<td>' + producto.peso + ' Kg</td>' +
+                '<td>' + producto.departamento + '</td>' +
+                '<td>' + producto.direccion_entrega + '</td>' +
+                '</tr>'
+            );
         });
-    </script>
-
-    <script>
-        $(document).ready(function () {
-
-            $.get("http://localhost:8000/api/almacen", function (data) {
-
-                $("#Almacen").empty();
-
-                $.each(data, function (index, almacen) {
-                    $("#Almacen").append($('<option>', {
-                        value: almacen.id,
-                        text: almacen.nombre
-                    }));
-                });
-            });
-        });
-    </script>
+    }
+</script>
 
     <div class="container-fluid bg-white footer mt-5">
         <div class="container wow fadeIn" data-wow-delay="0.1s">
