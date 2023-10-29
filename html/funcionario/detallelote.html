@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Detalle producto</title>
+    <title>Detalle lote</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -14,18 +14,19 @@
         href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&family=Poppins:wght@200;600;700&display=swap"
         rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-    <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
 </head>
 
 <body>
     <div class="container-fluid sticky-top">
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light">
-                <a href="index.html" class="navbar-brand mx-auto">
+                <a href="../../index.html" class="navbar-brand mx-auto">
                     <img class="img-fluid animated pulse infinite mt-2" src="img/logoblank.png" alt="" width="140">
                 </a>
                 <button type="button" class="navbar-toggler ms-auto me-0" data-bs-toggle="collapse"
@@ -34,8 +35,8 @@
                 </button>
                 <div class="collapse navbar-collapse mt-2" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
-                        <a href="productos.html" class="nav-item nav-link active">Productos</a>
-                        <a href="crearlote.html" class="nav-item nav-link">Lotes</a>
+                        <a href="productos.html" class="nav-item nav-link">Productos</a>
+                        <a href="lote.html" class="nav-item nav-link active">Lotes</a>
                         <a href="contacto.html" class="nav-item nav-link">Vehículos</a>
                         <a href="login.html" class="nav-item nav-link">Almacenes</a>
                         <a href="profile.html" class="nav-item nav-link">Perfil</a>
@@ -48,12 +49,82 @@
 
     <div class="container-fluid newsletter bg-primary hero-header py-5"></div>
 
-    <div class="container py-4">
-        <h2>Detalle de producto</h2>
-        <a>Estos son los detalles del producto.</a>
+
+    <div class="container py-2">
+        <h2>Crear lote</h2>
+        <a>Debes completar los datos para crear el lote. <br>
+            Es importante que la dirección de entrega del producto, esté cercano al almacen destino que tenga el lote.
+        </a>
+
+        <table class="table mt-4">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Almacén</th>
+                    <th scope="col">Peso</th>
+                    <th scope="col">Departamento</th>
+                    <th scope="col">Dirección</th>
+                </tr>
+            </thead>
+
+            <tbody id="tableBody">
+
+            </tbody>
+
+        </table>
+        <div class="container mt-5">
+            <form class="col-md-6 mt-5">
+                <label>Almacén:</label>
+                <select class="form-control mt-1" id="Almacen">
+
+                </select>
+            </form>
+        </div>
     </div>
 
-    <div class="container-fluid bg-white footer mt-2">
+<script>
+    $(document).ready(function () {
+        var loteId = getLoteIdFromURL(); // Obtener el ID de lote desde la URL
+        if (loteId) {
+            // Hacer una solicitud GET a la API con el ID de lote
+            $.get("http://localhost:8000/api/lote/" + loteId + "/productos", function (data) {
+                // Manejar la respuesta de la API
+                llenarTabla(data.productos);
+            });
+        } else {
+            console.log("No se encontró el ID de lote en la URL.");
+        }
+    });
+
+    // Función para obtener el ID de lote desde la URL
+    function getLoteIdFromURL() {
+        var searchParams = new URLSearchParams(window.location.search);
+        var loteId = searchParams.get("lote_id");
+        return loteId;
+    }
+
+    // Función para llenar la tabla con los productos
+    function llenarTabla(productos) {
+        console.log('Productos recibidos de la API:', productos);
+        $('#tableBody').empty();
+
+        $.each(productos, function (index, producto) {
+            $('#tableBody').append(
+                '<tr>' +
+                '<th scope="row">' + producto.id + '</th>' +
+                '<td>' + producto.fecha_entrega + '</td>' +
+                '<td>' + producto.almacen_id + '</td>' +
+                '<td>' + producto.peso + ' Kg</td>' +
+                '<td>' + producto.departamento + '</td>' +
+                '<td>' + producto.direccion_entrega + '</td>' +
+                '</tr>'
+            );
+        });
+    }
+</script>
+
+    <div class="container-fluid bg-white footer mt-5">
         <div class="container wow fadeIn" data-wow-delay="0.1s">
             <div class="copyright">
                 <div class="row">
@@ -72,6 +143,8 @@
             </div>
         </div>
     </div>
+    </div>
+
 </body>
 
 </html>
