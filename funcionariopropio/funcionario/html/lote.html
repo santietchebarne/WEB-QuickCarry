@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <title>Lotes</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+    <link href="img/favicon.ico" rel="icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&family=Poppins:wght@200;600;700&display=swap"
+        rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="../../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../../css/style.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+</head>
+
+<body>
+    <div class="container-fluid sticky-top">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <a href="../../../index.html" class="navbar-brand mx-auto">
+                    <img class="img-fluid animated pulse infinite mt-2" src="img/logoblank.png" alt="" width="140">
+                </a>
+                <button type="button" class="navbar-toggler ms-auto me-0" data-bs-toggle="collapse"
+                    data-bs-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse mt-2" id="navbarCollapse">
+                    <div class="navbar-nav ms-auto">
+                        <a href="productos.html" class="nav-item nav-link">Productos</a>
+                        <a href="lote.html" class="nav-item nav-link active">Lotes</a>
+                        <a href="contacto.html" class="nav-item nav-link">Vehículos</a>
+                        <a href="login.html" class="nav-item nav-link">Almacenes</a>
+                        <a href="profile.html" class="nav-item nav-link">Perfil</a>
+                        <a href="login.html" class="nav-item nav-link">Cerrar sesión</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <div class="container-fluid newsletter bg-primary hero-header py-5"></div>
+
+    <!--Script para que muestre los datos en la tabla con la API de Almacenes.-->
+    <script>
+        $(document).ready(function () {
+            var apiUrl = 'http://localhost:8000/api/lote';
+
+            function formatFecha(fechaStr) {
+                const fecha = new Date(fechaStr);
+                const options = {
+                    day: "2-digit",
+                    month: "2-digit",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                };
+                const fechaFormateada = fecha.toLocaleString("es-ES", options).replace(',', '');
+                return fechaFormateada + ' hs';
+            }
+            function formatPeso(peso) {
+                return peso + ' Kg';
+            }
+
+            $.ajax({
+                url: apiUrl,
+                type: 'GET',
+                success: function (data) {
+                    $('#tableBody').empty();
+
+                    data.forEach(function (lote) {
+                        $('#tableBody').append(`
+                            <tr>
+                                <td>${lote.id}</td>
+                                <td>${formatFecha(lote.created_at)}</td>
+                                <td>${lote.creador_id}</td>
+                                <td>${formatPeso(lote.peso)}</td>
+                                <td>${lote.almacen_destino}</td>
+                                <td>${lote.estado}</td>
+                                <td><a href="finalizarlote.html?lote_id=${lote.id}"><i class="fas fa-arrow-right"></i></a></td>
+                            </tr>
+                        `);
+                    });
+                },
+                error: function (error) {
+                    console.error('Error al cargar los productos:', error);
+                }
+            });
+        });
+    </script>
+
+
+    <div class="container py-4">
+        <h2>Lotes</h2>
+        <a>Aquí podés ver los lotes y el estado de cada uno.</a>
+        <div class="filters py-5"> <!--Filtros de la tabla-->
+            <h6>Buscar por ID: <input type="text" id="searchInput">
+                <label>Almacén</label>
+                <select id="filterAlmacen">
+                    <option value="todos">Todos</option>
+                    <option value="Central">Central</option>
+                    <option value="Artigas">Artigas</option>
+                    <option value="Canelones">Canelones</option>
+                    <option value="Cerro Largo">Cerro Largo</option>
+                    <option value="Colonia">Colonia</option>
+                    <option value="Durazno">Durazno</option>
+                    <option value="Flores">Flores</option>
+                    <option value="Florida">Florida</option>
+                    <option value="Lavalleja">Lavalleja</option>
+                    <option value="Maldonado">Maldonado</option>
+                    <option value="Paysandú">Paysandú</option>
+                    <option value="Río Negro">Río Negro</option>
+                    <option value="Rivera">Rivera</option>
+                    <option value="Rocha">Rocha</option>
+                    <option value="Salto">Salto</option>
+                    <option value="San José">San José</option>
+                    <option value="Soriano">Soriano</option>
+                    <option value="Tacuarembó">Tacuarembó</option>
+                    <option value="Treinta y Tres">Treinta y Tres</option>
+                </select>
+
+                <label>Departamento</label>
+                <select id="filterDepartamento">
+                    <option value="todos">Todos</option>
+                    <option value="Artigas">Artigas</option>
+                    <option value="Canelones">Canelones</option>
+                    <option value="Cerro Largo">Cerro Largo</option>
+                    <option value="Colonia">Colonia</option>
+                    <option value="Durazno">Durazno</option>
+                    <option value="Flores">Flores</option>
+                    <option value="Florida">Florida</option>
+                    <option value="Lavalleja">Lavalleja</option>
+                    <option value="Maldonado">Maldonado</option>
+                    <option value="Montevideo">Montevideo</option>
+                    <option value="Paysandú">Paysandú</option>
+                    <option value="Río Negro">Río Negro</option>
+                    <option value="Rivera">Rivera</option>
+                    <option value="Rocha">Rocha</option>
+                    <option value="Salto">Salto</option>
+                    <option value="San José">San José</option>
+                    <option value="Soriano">Soriano</option>
+                    <option value="Tacuarembó">Tacuarembó</option>
+                    <option value="Treinta y Tres">Treinta y Tres</option>
+                </select>
+
+                <label>Estado</label>
+                <select id="filterStatus">
+                    <option value="todos">Todos</option>
+                    <option value="Entregado">Entregado</option>
+                    <option value="En curso">En curso</option>
+                    <option value="Pendiente">Pendiente</option>
+                </select>
+
+                <button class="btn btn-link py-0 reset-button" id="resetFiltersButton">Restablecer</button>
+
+        </div>
+        </h6>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Usuario</th>
+                    <th scope="col">Peso</th>
+                    <th scope="col">Destino</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+
+            <tbody id="tableBody">
+
+            </tbody>
+        </table>
+        <div class="text-end">
+            <button id="crearLoteButton" class="btn btn-primary mt-3 text-end">Crear lote</button>
+        </div>
+    </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            // Manejador de eventos para el botón "Crear lote"
+            $('#crearLoteButton').on('click', function () {
+                // Redirige a la página "crearlote.html" cuando se hace clic en el botón
+                window.location.href = 'crearlote.html';
+            });
+
+            $('#searchInput, #filterAlmacen, #filterDepartamento, #filterStatus').on('input', function () {
+                // ... (código para filtrar la tabla)
+            });
+
+            $('#resetFiltersButton').on('click', function () {
+                // ... (código para restablecer filtros)
+            });
+        });
+    </script>
+
+<script>
+    $(document).ready(function () {
+
+        $.get("http://localhost:8000/api/almacen", function (data) {
+
+            $("#Almacen").empty();
+
+            $.each(data, function (index, almacen) {
+                $("#Almacen").append($('<option>', {
+                    value: almacen.id,
+                    text: almacen.nombre
+                }));
+            });
+        });
+    });
+</script>
+
+    <div class="container-fluid bg-white footer mt-5">
+        <div class="container wow fadeIn" data-wow-delay="0.1s">
+            <div class="copyright">
+                <div class="row">
+                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                        &copy; <a href="https://www.sersolutions.com" class="border-bottom" href="#">SER Solutions</a>,
+                        Todos los derechos reservados.
+                    </div>
+                    <div class="col-md-6 text-center text-md-end">
+                        <div class="footer-menu">
+                            <a href="about.html">Feedback</a>
+                            <a href="contacto.html">Cambiar idioma</a>
+                            <a href="login.html">Cerrar sesión</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+
+            $('#searchInput, #filterAlmacen, #filterDepartamento, #filterStatus').on('input', function () {
+                const searchText = $('#searchInput').val().toLowerCase();
+                const almacenText = $('#filterAlmacen').val();
+                const departamentoText = $('#filterDepartamento').val();
+                const selectedStatus = $('#filterStatus').val();
+
+                $('#tableBody tr').each(function () {
+                    const idText = $(this).find('th').text();
+                    const statusText = $(this).find('td:eq(5) span').text();
+                    const id = parseInt(idText);
+                    const almacen = $(this).find('td:eq(2)').text();
+                    const departamento = $(this).find('td:eq(4)').text().toLowerCase();
+
+                    if (
+                        (isNaN(id) || id === '' || id === 0 || id === null || id === undefined || idText.includes(searchText)) &&
+                        (almacenText === 'todos' || almacen === almacenText) &&
+                        (departamentoText === 'todos' || departamento.includes(departamentoText.toLowerCase())) &&
+                        (selectedStatus === 'todos' || statusText === selectedStatus)
+                    ) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+
+                if (searchText === '' && almacenText === 'todos' && departamentoText === 'todos' && selectedStatus === 'todos') {
+                    $('#tableBody tr').show();
+                }
+            });
+
+            $('#resetFiltersButton').on('click', function () {
+                $('#searchInput').val('');
+                $('#filterAlmacen').val('todos');
+                $('#filterDepartamento').val('todos');
+                $('#filterStatus').val('todos');
+
+                $('#tableBody tr').show();
+            });
+        });
+    </script>
+
+
+</body>
+
+</html>
