@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <link href="/favicon.ico" rel="icon">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&family=Poppins:wght@200;600;700&display=swap"
+        rel="stylesheet">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <title>Perfil</title>
+</head>
+
+<body>
+    <div class="container-fluid sticky-top">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <a href="/" class="navbar-brand mx-auto">
+                    <img class="img-fluid animated pulse infinite mt-2" src="/img/logoblank.png" alt="" width="140">
+                </a>
+                <button type="button" class="navbar-toggler ms-auto me-0" data-bs-toggle="collapse"
+                    data-bs-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse mt-2" id="navbarCollapse">
+                    <div class="navbar-nav ms-auto">
+                        <a href="/" class="nav-item nav-link">Inicio</a>
+                        <a href="/html/agregarproducto.html" class="nav-item nav-link">Crear producto</a>
+                        <a href="/html/profile.html" class="nav-item nav-link active">Perfil</a>
+                        <a href="#" class="nav-item nav-link">Cerrar sesión</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <div class="container-fluid newsletter bg-primary hero-header py-5"></div>
+
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col col-lg-10 mb-4 mb-lg-0">
+                <div class="card mb-6" style="border-radius: .5rem;">
+                    <div class="row g-0">
+                        <div class="col-md-4 gradient-custom text-center text-white"
+                            style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;">
+                            <img src="/img/homer.png" alt="Avatar" class="img-fluid my-5" style="width: 150px;" />
+                            <h4>Homero Simpson</h4>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card-body p-4">
+                                <div class="col-8 mb-3">
+                                    <h6>Correo</h6>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="correo" name="correo"
+                                            value="hsimpson@quickcarry.com" disabled>
+                                        <button type="button" class="btn btn-primary" id="editarCorreo">Editar</button>
+                                    </div>
+                                </div>
+                                <div class="col-8 mb-3">
+                                    <h6>Celular</h6>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="celular" name="celular"
+                                            value="093 466 376" disabled>
+                                        <button type="button" class="btn btn-primary" id="editarCelular">Editar</button>
+                                    </div>
+                                </div>
+                                <h6>Información personal</h6>
+                                <hr class="mt-0 mb-4">
+                                <div class="row pt-1">
+                                    <div class="col-6 mb-3">
+                                        <h6>Documento</h6>
+                                        <p class="text-muted">1.234.567-8</p>
+                                    </div>
+                                    <div class="col-6 mb-3">
+                                        <h6>Dirección</h6>
+                                        <p class="text-muted">Siempre viva 742</p>
+                                    </div>
+                                    <div class="row pt-1">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid bg-white footer mt-5">
+            <div class="container wow fadeIn" data-wow-delay="0.1s">
+                <div class="copyright">
+                    <div class="row">
+                        <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                            &copy; <a href="#" class="border-bottom" href="#">SER Solutions</a>,
+                            Todos los derechos reservados.
+                        </div>
+                        <div class="col-md-6 text-center text-md-end">
+                            <div class="footer-menu">
+                                <a href="#">Cambiar idioma</a>
+                                <a href="#">Cerrar sesión</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
