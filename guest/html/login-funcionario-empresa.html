@@ -56,31 +56,28 @@
         <div class="container">
             <div class="mx-auto text-center wow fadeIn" data-wow-delay="0.1s" style="max-width: 600px;">
                 <div class="wow fadeIn" data-wow-delay="0.3s">
-                    <form id="loginForm">
+                    <form id="login-form">
                         <div class="row g-3">
-                            <div class="col-md-6">
+                            <div class="col-12 col-lg-6">
                                 <div class="form-floating">
-                                    <input type="email" class="form-control" id="email" placeholder="correo@example.com" required>
-                                    <label for="email">Correo Electrónico</label>
+                                    <input type="email" class="form-control" id="email-input" name="email" placeholder="correo@example.com" required>
+                                    <label for="email-input">Correo Electrónico</label>
                                 </div>
                             </div>
-                            <div class="col-6">
+                            <div class="col-12 col-lg-6">
                                 <div class="form-floating">
-                                    <input type="password" class="form-control" id="passwordInput" placeholder="Contraseña" required>
-                                    <label for="passwordInput">Contraseña</label>
+                                    <input type="password" class="form-control" id="password-input" name="password" placeholder="Contraseña" required>
+                                    <label for="password-input">Contraseña</label>
                                 </div>
+                            </div>
+                            <div class="col-12" id="login-errors">
+
                             </div>
                             <div class="col-12">
                                 <button class="btn btn-primary w-100 py-2" type="submit">Iniciar sesión</button>
                             </div>
                             <div class="col-12">
                                 <p><a href="#" id="forgotPasswordLink">Olvidé mi contraseña</a></p>
-                            </div>
-                            <div class="col-12" style="display: none;" id="forgotPasswordEmail">
-                                <div class="form-floating">
-                                    <input type="email" class="form-control" id="forgotEmail" placeholder="correo@example.com" required>
-                                    <label for="forgotEmail">Correo Electrónico</label>
-                                </div>
                             </div>
                         </div>
                     </form>
@@ -144,6 +141,7 @@
     </div>
 
     <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+    <script type="module" src="/src/funcionario-tercerizado/login.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 </body>
 

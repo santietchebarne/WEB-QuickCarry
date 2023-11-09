@@ -1,0 +1,7 @@
+/** Necesitas crear un archivo api-token.js con el client_secret y client_id de tu aplicacion
+ * client_secret example -- lta56aZJ3hOvRBoGNTzOCwJQraWS3IzmOWmCnezb
+ * client_id example -- 1
+ */
+
+export const CLIENT_SECRET = ""
+export const CLIENT_ID = ""
