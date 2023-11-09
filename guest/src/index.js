@@ -1,3 +1,12 @@
+const desripcion = {
+    'En espera': 'Tu pedido esta viajando hacia nuestro deposito central.',
+    'Almacenado': 'Tu pedido esta almacenado en nuestro deposito central.',
+    'En ruta': 'Tu pedido esta viajando hacia el departamento destino.',
+    'Desloteado': 'Tu pedido esta en el departamento destino.',
+    'En viaje': 'Tu pedido esta en reparto.',
+    'Entregado': 'Tu pedido ya ha sido entregado.'
+}
+
 const buscarPedido = async () => {
     const container = document.querySelector('#info-pedido')
     const inputPedido = document.querySelector('#input-pedido')
@@ -27,20 +36,24 @@ const mostrarPedido = (pedido, container) => {
     const header = document.createElement('h4')
     const headerStrong = document.createElement('strong')
     const pDepartamento = document.createElement('p')
+    const pDescripcion = document.createElement('p')
     const pFecha = document.createElement('p')
 
     
     header.innerText = 'Tu pedido se encuentra en: '
-    headerStrong.innerHTML = estado
+    headerStrong.innerText = estado
     pDepartamento.innerText = `Departamento destino: ${departamento}`
+    pDescripcion.innerText = desripcion[estado]
     pFecha.innerText = `Fecha de entrega: ${month}/${day}`
     
     headerStrong.classList.add('text-primary')
     pDepartamento.classList.add('p-0', 'm-0')
+    pDescripcion.classList.add('p-0', 'm-0')
     pFecha.classList.add('p-0', 'm-0')
     
     header.appendChild(headerStrong)
     container.appendChild(header)
+    container.appendChild(pDescripcion)
     container.appendChild(pDepartamento)
     container.appendChild(pFecha)
 
