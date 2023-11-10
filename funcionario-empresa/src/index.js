@@ -3,8 +3,14 @@ const tokenLocalStorage = localStorage.getItem('token')
 if (!tokenLocalStorage) {
     const urlParams = new URLSearchParams(window.location.search)
     const token = urlParams.get('token')
-    const refresh_token = urlParams.get('refresh')
-    localStorage.setItem('token', token)
+
+    if(!token) {
+        location.href = 'http://localhost:5000'
+    } else {
+        localStorage.setItem('token', token)
+    }
+} else {
+    location.href = '/html/profile.html'
 }
 
-location.href = '/html/profile.html'
+
