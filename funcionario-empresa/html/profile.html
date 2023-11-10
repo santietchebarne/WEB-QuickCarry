@@ -33,7 +33,7 @@
     <div class="container-fluid sticky-top">
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light">
-                <a href="/" class="navbar-brand mx-auto">
+                <a class="navbar-brand mx-auto">
                     <img class="img-fluid animated pulse infinite mt-2" src="/img/logoblank.png" alt="" width="140">
                 </a>
                 <button type="button" class="navbar-toggler ms-auto me-0" data-bs-toggle="collapse"
@@ -42,7 +42,6 @@
                 </button>
                 <div class="collapse navbar-collapse mt-2" id="navbarCollapse">
                     <div class="navbar-nav ms-auto">
-                        <a href="/" class="nav-item nav-link">Inicio</a>
                         <a href="/html/agregarproducto.html" class="nav-item nav-link">Crear producto</a>
                         <a href="/html/profile.html" class="nav-item nav-link active">Perfil</a>
                         <a href="#" class="nav-item nav-link">Cerrar sesión</a>
@@ -103,7 +102,26 @@
             </div>
         </div>
 
-        <div class="container-fluid bg-white footer mt-5">
+        <div class="container-fluid bg-white footer mt-5 fixed-bottom d-none d-md-block">
+            <div class="container wow fadeIn" data-wow-delay="0.1s">
+                <div class="copyright">
+                    <div class="row">
+                        <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                            &copy; <a href="#" class="border-bottom" href="#">SER Solutions</a>,
+                            Todos los derechos reservados.
+                        </div>
+                        <div class="col-md-6 text-center text-md-end">
+                            <div class="footer-menu">
+                                <a href="#">Cambiar idioma</a>
+                                <a href="#">Cerrar sesión</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid bg-white footer mt-5 d-md-none">
             <div class="container wow fadeIn" data-wow-delay="0.1s">
                 <div class="copyright">
                     <div class="row">
