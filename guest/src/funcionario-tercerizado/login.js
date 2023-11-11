@@ -10,7 +10,8 @@ const getToken = async () => {
         client_id: CLIENT_ID,
         client_secret: CLIENT_SECRET,
         username: emailInput.value,
-        password: passwordInput.value
+        password: passwordInput.value,
+        scope: '*'
     }
 
     const res = await fetch('http://localhost:8000/oauth/token', {
