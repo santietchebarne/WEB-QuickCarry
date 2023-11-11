@@ -8,6 +8,7 @@ if (!tokenLocalStorage) {
         location.href = 'http://localhost:5000'
     } else {
         localStorage.setItem('token', token)
+        location.href = '/html/profile.html'
     }
 } else {
     location.href = '/html/profile.html'
