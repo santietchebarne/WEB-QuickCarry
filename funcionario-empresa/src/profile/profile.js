@@ -4,7 +4,7 @@ const emailContainer = document.querySelector('#email')
 const phoneContainer = document.querySelector('#phone')
 const addressContainer = document.querySelector('#address')
 
-const getUserInformation = async () => {
+const getUserInformation = () => {
     return fetch('http://localhost:8001/api/tercerizado/usuario', {
         method: 'GET',
         headers: {
