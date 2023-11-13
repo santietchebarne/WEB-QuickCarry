@@ -98,27 +98,29 @@
                 <button class="btn btn-link py-0 reset-button" id="resetFiltersButton">Restablecer</button>
         </div>
 
-        <table class="table mt-4 position-relative" style="min-height: 540px;">
-            <div class="position-absolute top-50 start-50" style="transform: translate(-80px);">
-                <div class="spinner-border text-muted d-none" role="productos" style="width: 10rem; height: 10rem;border-width: .75rem;">
-                    <span class="sr-only">Loading...</span>
+        <div style="min-height: 540px;">
+            <table class="table mt-4 position-relative" >
+                <div class="position-absolute top-50 start-50" style="transform: translate(-80px);">
+                    <div class="spinner-border text-muted d-none" role="productos" style="width: 10rem; height: 10rem;border-width: .75rem;">
+                        <span class="sr-only">Loading...</span>
+                    </div>
                 </div>
-            </div>
-            <thead>
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Almacén</th>
-                    <th scope="col">Fecha</th>
-                    <th scope="col">Peso</th>
-                    <th scope="col">Departamento</th>
-                    <th scope="col">Dirección</th>
-                    <th scope="col">Estado</th>
-                    <th scope="col">Lote</th>
-                </tr>
-            </thead>
-            <tbody id="productos-container">
-            </tbody>
-        </table>
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Almacén</th>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Peso</th>
+                        <th scope="col">Departamento</th>
+                        <th scope="col">Dirección</th>
+                        <th scope="col">Estado</th>
+                        <th scope="col">Lote</th>
+                    </tr>
+                </thead>
+                <tbody id="productos-container">
+                </tbody>
+            </table>
+        </div>
 
         <div class="d-flex justify-content-center col" id="btns-container">
         </div>

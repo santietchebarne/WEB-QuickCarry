@@ -8,6 +8,25 @@ const estados = {
     'Entregado': 'bg-success'
 }
 
+let almacenes = {}
+
+const getAlmacenes = async () => {
+    const res = await fetch('http://localhost:8001/api/almacen', {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+            'Authorization': 'Bearer ' + token 
+        }
+    })
+
+    if (res.status == '200') {
+        const data = await res.json()
+        almacenes = data
+    }
+}
+
 const productosContainer = document.querySelector('#productos-container')
 const btnsContainer = document.querySelector('#btns-container')
 
@@ -100,12 +119,14 @@ const showProductos = productos => {
             estado
         } = e
 
+        const nombreAlmacen = almacenes[almacen_id - 1].nombre
+
         const estadoValor = document.createElement('small')
         estadoValor.classList.add(estados[estado], 'text-light', 'p-1', 'rounded', 'fw-bold')
         idColumna.classList.add('fw-bold')
 
         idColumna.innerText = id
-        almacenColumna.innerText = almacen_id
+        almacenColumna.innerText = nombreAlmacen
         fechaColumna.innerText = fecha_entrega
         pesoColumna.innerText = peso
         departamentoColumna.innerText = departamento
@@ -156,5 +177,7 @@ const getProductos = async (page) => {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-    getProductos()
+    getAlmacenes()
+    .then(()=> getProductos())
+    .catch(err => cerrarSesion())
 })
