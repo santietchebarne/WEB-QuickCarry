@@ -1,3 +1,13 @@
+const estados = {
+    'En espera': 'bg-danger',
+    'Almacenado': 'bg-warning',
+    'Loteado': 'bg-info',
+    'En ruta': 'bg-info',
+    'Desloteado': 'bg-primary',
+    'En viaje': 'bg-primary',
+    'Entregado': 'bg-success'
+}
+
 const productosContainer = document.querySelector('#productos-container')
 const btnsContainer = document.querySelector('#btns-container')
 
@@ -55,8 +65,6 @@ const btnsNavegacion = (current, prev, next) => {
 
     btnsContainer.innerHTML = ''
     btnsContainer.appendChild(btnGroup)
-
-
 }
 
 const showProductos = productos => {
@@ -64,7 +72,12 @@ const showProductos = productos => {
     
     const {current_page, prev_page_url, next_page_url} = productos 
     const {data} = productos 
-    
+
+    if(data.length == 0) {
+        productosContainer.innerHTML = '<strong>Actualmente no existen productos!</strong>'
+        return
+    }
+
     data.forEach(e => {
         const row = document.createElement('tr')
         const idColumna = document.createElement('td')
@@ -75,11 +88,7 @@ const showProductos = productos => {
         const direccionColumna = document.createElement('td')
         const estadoColumna = document.createElement('td')
         const loteColumna = document.createElement('td')
-
-        const estadoValor = document.createElement('small')
-        estadoValor.classList.add('bg-danger', 'text-light', 'p-1', 'rounded', 'fw-bold')
-        idColumna.classList.add('fw-bold')
-
+        
         const {
             id,
             almacen_id,
@@ -90,6 +99,10 @@ const showProductos = productos => {
             peso,
             estado
         } = e
+
+        const estadoValor = document.createElement('small')
+        estadoValor.classList.add(estados[estado], 'text-light', 'p-1', 'rounded', 'fw-bold')
+        idColumna.classList.add('fw-bold')
 
         idColumna.innerText = id
         almacenColumna.innerText = almacen_id
@@ -138,7 +151,7 @@ const getProductos = async (page) => {
         return showProductos(data)
     } else {
         const err = await res.json()
-        console.log(err)
+        cerrarSesion()
     }
 }
 
