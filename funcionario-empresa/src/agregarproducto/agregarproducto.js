@@ -42,6 +42,30 @@ const obtenerFechaPorDefecto = () => {
   return fechaFormateada
 }
 
+const eliminarAlerta = alerta => {
+    setTimeout(() => {
+        alerta.classList.remove('show')
+    }, 7000)
+}
+
+const mostrarErrores = errores => {
+    const alert = document.createElement('div')
+    const fragment = document.createDocumentFragment()
+
+    for (const error in errores) {
+        const p = document.createElement('p')
+        p.innerText = errores[error]
+        p.classList.add('text-danger', 'p-0', 'm-0')
+        fragment.appendChild(p)
+    }
+
+    alert.classList.add('alert', 'alert-danger', 'alert-dismissible', 'fade', 'show', 'fixed-top', 'mt-5', 'mx-5')
+    alert.appendChild(fragment)
+    document.body.appendChild(alert)
+
+    eliminarAlerta(alert)
+}
+
 const mostrarProductoCreado = producto => {
     const container = document.querySelector('#container-productos')
     const containerPadre = document.querySelector('#container-padre')
@@ -93,7 +117,8 @@ const mostrarProductoCreado = producto => {
 
 const crearProducto = async () => {
     const departamento = document.querySelector('#departamento')
-    const direccion = document.querySelector('#direccion')
+    const calle = document.querySelector('#calle')
+    const nroDePuerta = document.querySelector('#nro-de-puerta')
     const almacen = document.querySelector('#almacenes')
     const fecha = document.querySelector('#fecha')
     const peso = document.querySelector('#peso')
@@ -102,7 +127,7 @@ const crearProducto = async () => {
 
     const producto = {
         departamento: departamento.value,
-        direccion_entrega: direccion.value,
+        direccion_entrega: calle.value + ' ' + nroDePuerta.value,
         almacen_id: almacen.value,
         fecha_entrega: fecha.value || fechaPorDefecto,
         peso: peso.value
@@ -122,9 +147,12 @@ const crearProducto = async () => {
     if(res.status == '201') {
         const data = await res.json()
         mostrarProductoCreado(data)
+    } else if (res.status == '400') {
+        const data = await res.json()
+        mostrarErrores(data)
     } else {
         const err = await res.json()
-        console.log(err)
+        cerrarSesion()
     }
 }
 
