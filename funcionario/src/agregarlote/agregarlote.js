@@ -68,9 +68,10 @@ const crearLote = async idsProductos => {
         body: JSON.stringify(lote)
     })
 
-    if(res.status == '200') {
+    if(res.status == '201') {
         const data = await res.json()
         console.log(data)
+        location.href = '/html/lote.html'
     } else {
         const data = await res.json()
         console.log(data)
