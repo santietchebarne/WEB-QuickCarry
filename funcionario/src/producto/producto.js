@@ -24,6 +24,8 @@ const getAlmacenes = async () => {
     if (res.status == '200') {
         const data = await res.json()
         almacenes = data
+    } else {
+        throw new Error()
     }
 }
 
@@ -128,7 +130,7 @@ const showProductos = productos => {
         idColumna.innerText = id
         almacenColumna.innerText = nombreAlmacen
         fechaColumna.innerText = fecha_entrega
-        pesoColumna.innerText = peso
+        pesoColumna.innerText = peso + ' kg'
         departamentoColumna.innerText = departamento
         direccionColumna.innerText = direccion_entrega
         estadoValor.innerText = estado

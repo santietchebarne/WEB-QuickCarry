@@ -96,7 +96,7 @@ const mostrarProductoCreado = producto => {
     idColumna.innerText = id
     almacenColumna.innerText = nombreAlmacen
     fechaColumna.innerText = fecha_entrega
-    pesoColumna.innerText = peso
+    pesoColumna.innerText = peso + ' kg'
     departamentoColumna.innerText = departamento
     direccionColumna.innerText = direccion_entrega
 
