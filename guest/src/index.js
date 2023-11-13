@@ -1,6 +1,7 @@
 const desripcion = {
     'En espera': 'Tu pedido esta viajando hacia nuestro deposito central.',
     'Almacenado': 'Tu pedido esta almacenado en nuestro deposito central.',
+    'Loteado': 'Tu pedido se encuentra en proceso de viajar hacia su departamento destino.',
     'En ruta': 'Tu pedido esta viajando hacia el departamento destino.',
     'Desloteado': 'Tu pedido esta en el departamento destino.',
     'En viaje': 'Tu pedido esta en reparto.',
@@ -40,7 +41,7 @@ const mostrarPedido = (pedido, container) => {
     const pFecha = document.createElement('p')
 
     
-    header.innerText = 'Tu pedido se encuentra en: '
+    header.innerText = 'Tu pedido se encuentra: '
     headerStrong.innerText = estado
     pDepartamento.innerText = `Departamento destino: ${departamento}`
     pDescripcion.innerText = desripcion[estado]
