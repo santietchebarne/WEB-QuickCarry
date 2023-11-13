@@ -5,7 +5,7 @@ const phoneContainer = document.querySelector('#phone')
 const addressContainer = document.querySelector('#address')
 
 const getUserInformation = () => {
-    return fetch('http://localhost:8001/api/usuario', {
+    return fetch('http://localhost:8001/api/usuario/token', {
         method: 'GET',
         headers: {
             'Accept': 'application/json',
