@@ -49,22 +49,24 @@
 
     <div class="container mt-5">
         <h2 class="text-center">Agregar nuevo producto:</h2>
-        <form class="col-md-6 mt-5 mx-auto" id="agregarproducto">
+        <form class="col-md-6 mt-5 mx-auto mb-5" id="agregarproducto">
             <label>Almacén:</label>
-            <select class="form-select mt-1" id="almacenes">
+            <select class="form-select mt-1" id="almacenes" required>
+                <option value="" selected disabled>Selecciona una almacen</option>
             </select>
 
             <label>Fecha:</label>
-            <input type="text" class="form-control mt-1" id="fecha">
+            <input type="date" class="form-control mt-1" id="fecha">
             <small class="d-block text-muted">Por defecto dos dias posteriores a la fecha actual.</small>
 
             <label>Peso:</label>
-            <input type="number" class="form-control mt-1" id="peso" min="0.01" required>
-            <small class="d-block text-muted">El peso debe ser mayor a cero y puede incluir decimales.</small>
+            <input type="text" class="form-control mt-1" pattern="\d+(\.\d{1,2})?" id="peso" required>
+            <small class="d-block text-muted">El peso debe ser mayor a cero y puede incluir dos decimales.</small>
 
             <div class="form-group">
                 <label class="mt-1" for="departamento">Departamento:</label>
-                <select class="form-select mt-1" id="departamento">
+                <select class="form-select mt-1" id="departamento" required>
+                    <option value="" selected disabled>Selecciona un departamento</option>
                     <option value="Artigas">Artigas</option>
                     <option value="Canelones">Canelones</option>
                     <option value="Cerro Largo">Cerro Largo</option>
@@ -94,31 +96,30 @@
             </div> -->
 
             <label>Dirección:</label>
-            <input type="text" class="form-control mt-1" id="direccion">
+            <input type="text" class="form-control mt-1" id="direccion" required>
             <button class="btn btn-primary w-100 py-2 mt-4" type="submit">Guardar</button>
         </form>
     </div>
 
-    <div class="container-fluid bg-white footer mt-5 fixed-bottom d-none d-md-block">
-        <div class="container wow fadeIn" data-wow-delay="0.1s">
-            <div class="copyright">
-                <div class="row">
-                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                        &copy; <a href="#" class="border-bottom" href="#">SER Solutions</a>,
-                        Todos los derechos reservados.
-                    </div>
-                    <div class="col-md-6 text-center text-md-end">
-                        <div class="footer-menu">
-                            <a href="#">Cambiar idioma</a>
-                            <a class="logout">Cerrar sesión</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="container p-5 pb-2 mb-5 d-none d-md-block d-md-none" id="container-padre">
+        <table class="table mt-4">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Almacén</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Peso</th>
+                    <th scope="col">Departamento</th>
+                    <th scope="col">Dirección</th>
+                    <th scope="col">Estado</th>
+                </tr>
+            </thead>
+            <tbody id="container-productos">
+            </tbody>
+        </table>
     </div>
 
-    <div class="container-fluid bg-white footer mt-5 d-md-none">
+    <div class="container-fluid bg-white footer mt-5">
         <div class="container wow fadeIn" data-wow-delay="0.1s">
             <div class="copyright">
                 <div class="row">
