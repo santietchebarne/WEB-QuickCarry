@@ -94,7 +94,7 @@ const showVehiculos = vehiculos => {
         estadoValor.innerText = estado
 
         row.addEventListener('click', () => {
-            location.href = `/html/asignartransportistas.html?=vehiculo_id=${id}`
+            location.href = `/html/asignartransportistas.html?vehiculo_id=${id}`
         })
 
         estadoColumna.appendChild(estadoValor)
