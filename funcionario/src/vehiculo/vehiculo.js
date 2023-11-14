@@ -83,6 +83,7 @@ const showVehiculos = vehiculos => {
             estado
         } = e
 
+        row.classList.add('row-to-click')
         estadoValor.classList.add(estados[estado], 'text-light', 'p-1', 'rounded', 'fw-bold')
         idColumna.classList.add('fw-bold')
 
@@ -92,8 +93,11 @@ const showVehiculos = vehiculos => {
         limitePesoColuma.innerText = limite_peso + ' kg'
         estadoValor.innerText = estado
 
-        estadoColumna.appendChild(estadoValor)
+        row.addEventListener('click', () => {
+            location.href = `/html/asignartransportistas.html?=vehiculo_id=${id}`
+        })
 
+        estadoColumna.appendChild(estadoValor)
         row.appendChild(idColumna)
         row.appendChild(matriculaColumna)
         row.appendChild(pesoColumna)
