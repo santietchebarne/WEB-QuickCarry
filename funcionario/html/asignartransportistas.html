@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <link href="/favicon.ico" rel="icon">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&family=Poppins:wght@200;600;700&display=swap"
+        rel="stylesheet">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+
+    <title>Vehiculos</title>
+</head>
+
+<body>
+    <div class="container-fluid sticky-top">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <a class="navbar-brand mx-auto">
+                    <img class="img-fluid animated pulse infinite mt-2" src="/img/logoblank.png" alt="" width="140">
+                </a>
+                <button type="button" class="navbar-toggler ms-auto me-0" data-bs-toggle="collapse"
+                    data-bs-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse mt-2" id="navbarCollapse">
+                    <div class="navbar-nav ms-auto">
+                        <a href="/html/producto.html" class="nav-item nav-link">Productos</a>
+                        <a href="/html/lote.html" class="nav-item nav-link">Lotes</a>
+                        <a href="/html/vehiculo.html" class="nav-item nav-link active">Vehículos</a>
+                        <a href="/html/almacen.html" class="nav-item nav-link">Almacenes</a>
+                        <a href="/html/profile.html" class="nav-item nav-link">Perfil</a>
+                        <a class="nav-item nav-link logout" style="cursor: pointer;">Cerrar sesión</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <div class="container-fluid newsletter bg-primary hero-header py-5"></div>
+
+    <div class="container pt-5">
+        <h2>Asignar Transportistas</h2>
+        <a>Para modificar el asignamiento de transportistas a los diferentes vehículos, debes ir activando su casilla de
+            asignación.</a>
+
+        <div id="vehiculo-container" class="mb-2">
+            <h4 class="mt-2 mb-0">Vehiculo - 20 </h4>
+            <p class="p-0 m-0"><strong>Estado</strong>: Disponible</p>
+            <p class="p-0 m-0"><strong>Estado</strong>: Disponible</p>
+            <p class="p-0 m-0"><strong>Estado</strong>: Disponible</p>
+            <h5>Transportistas</h5>
+            <div id="transportistas-asignados">
+
+            </div>
+        </div>
+
+
+        <div style="min-height: 540px;">
+            <table class="table mt-4 position-relative">
+                <div class="position-absolute top-50 start-50" style="transform: translate(-80px);">
+                    <div class="spinner-border text-muted d-none" role="vehiculos"
+                        style="width: 10rem; height: 10rem;border-width: .75rem;">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Matrícula</th>
+                        <th scope="col">Peso</th>
+                        <th scope="col">Límite de peso</th>
+                        <th scope="col">Estado</th>
+                    </tr>
+                </thead>
+                <tbody id="vehiculos-container">
+                </tbody>
+            </table>
+        </div>
+
+        <div class="d-flex justify-content-center col" id="btns-container">
+        </div>
+
+        <div class="container-fluid bg-white footer mt-5">
+            <div class="container wow fadeIn" data-wow-delay="0.1s">
+                <div class="copyright">
+                    <div class="row">
+                        <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                            &copy; <a href="#" class="border-bottom" href="#">SER Solutions</a>,
+                            Todos los derechos reservados.
+                        </div>
+                        <div class="col-md-6 text-center text-md-end">
+                            <div class="footer-menu">
+                                <a href="#">Cambiar idioma</a>
+                                <a class="logout" style="cursor: pointer;">Cerrar sesión</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="/auth.js"></script>
+        <script src="/src/logout.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
