@@ -7,6 +7,54 @@ const estados = {
 const vehiculoContainer = document.querySelector('#vehiculos-container')
 const btnsContainer = document.querySelector('#btns-container')
 
+const btnsNavegacion = (current, prev, next) => {
+    const btnGroup = document.createElement('div')
+    const btnPrev = document.createElement('button')
+    const btnNext = document.createElement('button')
+    const iPrev = document.createElement('i')
+    const iNext = document.createElement('i')
+    const textPrev = document.createTextNode(' Atrás')
+    const textNext = document.createTextNode('Siguiente ')
+
+
+    btnGroup.setAttribute('role', 'group')
+    btnGroup.setAttribute('aria-label', 'Botones de Navegación')
+    btnPrev.setAttribute('type', 'button')
+    btnPrev.setAttribute('disabled', '')
+    btnNext.setAttribute('type', 'button')
+    btnNext.setAttribute('disabled', '')
+    
+    btnGroup.classList.add('btn-group')
+    btnPrev.classList.add('btn', 'btn-success')
+    btnNext.classList.add('btn', 'btn-success')
+    iPrev.classList.add('fas', 'fa-chevron-left')
+    iNext.classList.add('fas', 'fa-chevron-right')
+
+    btnPrev.appendChild(iPrev)
+    btnPrev.appendChild(textPrev)
+    btnNext.appendChild(textNext)
+    btnNext.appendChild(iNext)
+    btnGroup.appendChild(btnPrev)
+    btnGroup.appendChild(btnNext)
+
+    if(prev) {
+        btnPrev.removeAttribute('disabled', '')
+        btnPrev.addEventListener('click', () => {
+            getVehiculos(prev)
+        })
+    }
+
+    if(next) {
+        btnNext.removeAttribute('disabled', '')
+        btnNext.addEventListener('click', () => {
+            getVehiculos(next)
+        })
+    }
+
+    btnsContainer.innerHTML = ''
+    btnsContainer.appendChild(btnGroup)
+}
+
 const showVehiculos = vehiculos => {
     const fragment = document.createDocumentFragment()
     
@@ -55,7 +103,7 @@ const showVehiculos = vehiculos => {
         fragment.appendChild(row)
     })
     vehiculoContainer.appendChild(fragment)
-    // btnsNavegacion(current_page, prev_page_url, next_page_url)
+    btnsNavegacion(current_page, prev_page_url, next_page_url)
 }
 
 const mostrarSpinner = () => {
