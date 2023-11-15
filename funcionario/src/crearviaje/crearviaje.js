@@ -7,6 +7,7 @@ const estados = {
 const lotesContainer = document.querySelector('#lotes-container')
 const btnsContainer = document.querySelector('#btns-container')
 const btnIniciarViaje = document.querySelector('#iniciar-viaje')
+const modalConfirmarViaje = new bootstrap.Modal(document.querySelector('#confirmar-viaje'));
 
 let almacenes = {}
 let usuarios = {}
@@ -45,7 +46,7 @@ const iniciarViaje = () => {
     }
 
     if(lotes.length != 0) {
-        console.log(lotes)
+        modalConfirmarViaje.show()
     } else {
         return mostrarError()
     }
