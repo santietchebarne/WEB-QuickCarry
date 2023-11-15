@@ -7,7 +7,9 @@ const estados = {
 const lotesContainer = document.querySelector('#lotes-container')
 const btnsContainer = document.querySelector('#btns-container')
 const btnIniciarViaje = document.querySelector('#iniciar-viaje')
-const modalConfirmarViaje = new bootstrap.Modal(document.querySelector('#confirmar-viaje'));
+const rutaSelect = document.querySelector('#ruta-container')
+const vehiculoSelect = document.querySelector('#vehiculo-container')
+const modalConfirmarViaje = new bootstrap.Modal(document.querySelector('#confirmar-viaje'))
 
 let almacenes = {}
 let usuarios = {}
@@ -243,10 +245,78 @@ const getLotes = async (page) => {
     }
 }
 
+const getRutas = async () => {
+    const res = await fetch('http://localhost:8001/api/ruta', {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+            'Authorization': 'Bearer ' + token 
+        }
+    })
+
+    if (res.status == '200') {
+        const data = await res.json()
+        showRutas(data)
+    } else {
+        const data = await res.json()
+    }
+}
+
+const showRutas = rutas => {
+    const fragment = document.createDocumentFragment()
+
+    for (const ruta of rutas) {
+        const {id, distanciakm, tiempo_estimado} = ruta
+        const optionInput = document.createElement('option')
+        optionInput.value = id
+        optionInput.innerText = `Ruta: ${id} - ${distanciakm} Km - ${tiempo_estimado} Hs`
+
+        fragment.appendChild(optionInput)
+    }
+    rutaSelect.appendChild(fragment)
+}
+
+const getVehiculos = async () => {
+    const res = await fetch('http://localhost:8001/api/vehiculo/estado?estado=Disponible', {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+            'Authorization': 'Bearer ' + token 
+        }
+    })
+
+    if (res.status == '200') {
+        const data = await res.json()
+        showVehiculos(data)
+    } else {
+        const data = await res.json()
+    }
+}
+
+const showVehiculos = vehiculos => {
+    const fragment = document.createDocumentFragment()
+
+    for (const vehiculo of vehiculos) {
+        const {id, matricula, limite_peso} = vehiculo
+        const optionInput = document.createElement('option')
+        optionInput.value = id
+        optionInput.innerText = `${matricula.toUpperCase()} - Limite peso: ${limite_peso}`
+
+        fragment.appendChild(optionInput)
+    }
+    vehiculoSelect.appendChild(fragment)
+}
+
 window.addEventListener('DOMContentLoaded', () => {
     getAlmacenes()
     .then(() => getUsuarios())
     .then(() => getLotes())
+    .then(() => getRutas())
+    .then(() => getVehiculos())
 
     btnIniciarViaje.addEventListener('click', () => {
         iniciarViaje()
