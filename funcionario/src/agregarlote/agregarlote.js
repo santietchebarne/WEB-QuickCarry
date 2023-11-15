@@ -165,7 +165,6 @@ const btnsNavegacion = (current, prev, next) => {
     btnsContainer.appendChild(btnGroup)
 }
 
-
 const showProductos = productos => {
     const fragment = document.createDocumentFragment()
     
