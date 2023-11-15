@@ -96,9 +96,10 @@
         </div>
 
         <div style="min-height: 540px;">
-            <table class="table mt-4 position-relative" >
+            <table class="table mt-4 position-relative">
                 <div class="position-absolute top-50 start-50" style="transform: translate(-80px);">
-                    <div class="spinner-border text-muted d-none" role="lotes" style="width: 10rem; height: 10rem;border-width: .75rem;">
+                    <div class="spinner-border text-muted d-none" role="lotes"
+                        style="width: 10rem; height: 10rem;border-width: .75rem;">
                         <span class="sr-only">Loading...</span>
                     </div>
                 </div>
@@ -124,33 +125,43 @@
             <button id="iniciar-viaje" class="btn btn-primary mt-3 text-end" type="button">Iniciar viaje</button>
         </div>
 
-        <div class="modal fade" id="confirmar-viaje" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="confirmar-viaje" tabindex="-1" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
             <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Parámetros de viaje</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                </div>
-                <div class="modal-body" id="modal-body">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Parámetros de viaje</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                    </div>
+                    <div class="modal-body" id="modal-body">
 
-                    <form id="form-viaje" class="mb-2">
-                        <label for="vehiculo-container">Vehículo:</label>
-                        <select class="form-select mt-1" id="vehiculo-container" required>
-                            <option value="" selected disabled>Selecciona un vehículo</option>
-                        </select>
-                        <label for="ruta-container">Ruta:</label>
-                        <select class="form-select mt-1" id="ruta-container" required>
-                            <option value="" selected disabled>Selecciona una ruta</option>
-                        </select>
-                        <button type="submit" class="btn btn-primary">Enviar</button>
-                    </form>
+                        <form id="form-viaje" class="mb-2">
+                            <label for="vehiculo-container">Vehículo:</label>
+                            <select class="form-select mt-1" id="vehiculo-container" required>
+                                <option value="" selected disabled>Selecciona un vehículo</option>
+                            </select>
+                            <label for="ruta-container">Ruta:</label>
+                            <select class="form-select mt-1" id="ruta-container" required>
+                                <option value="" selected disabled>Selecciona una ruta</option>
+                            </select>
 
+                            <div class="form-group">
+                                <h6>Salida programada:</h6>
+                                <label for="fecha">Fecha:</label>
+                                <input type="date" class="form-control" id="fecha" name="fecha">
+                                <label for="hora">Hora:</label>
+                                <input type="time" class="form-control" id="hora" name="hora">
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Enviar</button>
+                        </form>
+
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
+        </div>
 
-          <div class="container-fluid bg-white footer mt-5">
+        <div class="container-fluid bg-white footer mt-5">
             <div class="container wow fadeIn" data-wow-delay="0.1s">
                 <div class="copyright">
                     <div class="row">
@@ -169,10 +180,10 @@
             </div>
         </div>
 
-    <script src="/auth.js"></script>
-    <script src="/src/logout.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="/src/crearviaje/crearviaje.js"></script>
+        <script src="/auth.js"></script>
+        <script src="/src/logout.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="/src/crearviaje/crearviaje.js"></script>
 </body>
 
 </html>

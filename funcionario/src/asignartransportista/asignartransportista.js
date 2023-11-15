@@ -18,8 +18,6 @@ const enviarFormulario = async () => {
         idsTransportistas: usuarios
     }
 
-console.log(body);
-
     const res = await fetch('http://localhost:8001/api/vehiculo/transportistas/asignar', {
         method: 'POST',
         headers: {

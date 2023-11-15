@@ -10,6 +10,7 @@ const btnIniciarViaje = document.querySelector('#iniciar-viaje')
 const rutaSelect = document.querySelector('#ruta-container')
 const vehiculoSelect = document.querySelector('#vehiculo-container')
 const modalConfirmarViaje = new bootstrap.Modal(document.querySelector('#confirmar-viaje'))
+const formViaje = document.querySelector('#form-viaje')
 
 let almacenes = {}
 let usuarios = {}
@@ -21,6 +22,53 @@ const mostrarSpinner = () => {
 
 const ocultarSpinner = () => {
     document.querySelector('[role="lotes"]').classList.add('d-none')
+}
+
+const enviarFormulario = async () => {
+    const ruta = rutaSelect.value
+    const vehiculo = vehiculoSelect.value
+    const fecha = document.querySelector('#fecha')
+    const hora = document.querySelector('#hora')
+    const lotes = [] 
+
+    for (const id in lotesSeleccionados) {
+        lotes.push(id)
+    }
+
+    if(lotes.length == 0) {
+        // cerrarSesion()
+    }
+
+    console.log(fecha.value)
+    console.log(hora.value)
+    const fecha_programada = `${fecha.value} ${hora.value}:00`    
+
+    const body = {
+        vehiculo_id: vehiculo,
+        ruta_id: ruta,
+        idsLotes: lotes,
+        salida_programada: fecha_programada
+    }
+
+    const res = await fetch('http://localhost:8001/api/vehiculo/crearViaje', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+            'Authorization': 'Bearer ' + token 
+        },
+        body: JSON.stringify(body)
+    })
+
+    if(res.status == '201') {
+        const data = await res.json()
+        console.log(data)
+        location.href = '/html/vehiculo.html'
+    } else {
+        const data = await res.json()
+        console.log(data)
+    }
 }
 
 const eliminarAlerta = alerta => {
@@ -320,5 +368,10 @@ window.addEventListener('DOMContentLoaded', () => {
 
     btnIniciarViaje.addEventListener('click', () => {
         iniciarViaje()
+    })
+
+    formViaje.addEventListener('submit', e => {
+        e.preventDefault()
+        enviarFormulario()
     })
 })
