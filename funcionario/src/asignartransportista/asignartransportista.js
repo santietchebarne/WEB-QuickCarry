@@ -1,7 +1,66 @@
 const vehiculoContainer = document.querySelector('#vehiculo-container')
 const btnsContainer =  document.querySelector('#btns-container')
+const formTransportistas = document.querySelector('#form-transportistas')
+const btnModal = document.querySelector('#mostrar-modal')
 
 let transportistasSeleccionados = {}
+
+const enviarFormulario = async () => {
+    const usuarios = []
+    const vehiculo = idVehiculo
+
+    for (const id in transportistasSeleccionados) {
+        usuarios.push(id)
+    }
+
+    const body = {
+        vehiculo_id: vehiculo,
+        idsTransportistas: usuarios
+    }
+
+console.log(body);
+
+    const res = await fetch('http://localhost:8001/api/vehiculo/transportistas/asignar', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+            'Authorization': 'Bearer ' + token 
+        },
+        body: JSON.stringify(body)
+    })
+
+    if(res.status == '201') {
+        const data = await res.json()
+        console.log(data)
+        location.href = '/html/vehiculo.html'
+    } else {
+        const data = await res.json()
+        console.log(data)
+    }
+}
+
+const mostrarFormulario = () => {
+    const fragment = document.createDocumentFragment()
+    formTransportistas.innerHTML = ''
+
+    if (Object.keys(transportistasSeleccionados).length === 0) {
+        formTransportistas.innerText = 'El vehiculo no tiene transportistas asignados!'
+        return;
+    }
+
+    for (const transportista in transportistasSeleccionados) {
+        const nombreCompleto = transportistasSeleccionados[transportista]
+        const div = document.createElement('div')
+
+        div.classList.add('border', 'rounded', 'p-2')
+        div.innerText = nombreCompleto
+        fragment.appendChild(div)
+    }
+
+    formTransportistas.appendChild(fragment)
+}
 
 const mostrarSpinner = () => {
     document.querySelector('[role="vehiculos"]').classList.remove('d-none')
@@ -84,12 +143,12 @@ const showTransportistas = transportistas => {
         const {nombre, apellido} = usuario
 
         btnAsignar.setAttribute('id', user_id)
-        btnAsignar.setAttribute('type', 'button', 'm-1')
+        btnAsignar.setAttribute('type', 'button')
+        btnAsignar.setAttribute('data-nombre', nombre + ' ' + apellido)
         btnAsignar.style.background = '#198754'
 
         if(vehiculo_id) {
             btnAsignar.setAttribute('disabled', '')
-            transportistasSeleccionados[user_id] = user_id
         }
 
         idColumna.classList.add('fw-bold')
@@ -103,7 +162,8 @@ const showTransportistas = transportistas => {
 
         btnAsignar.addEventListener('click', e => {
             const id = e.target.id
-            transportistasSeleccionados[id] = id
+            const nombre = e.target.dataset.nombre
+            transportistasSeleccionados[id] = nombre
             e.target.setAttribute('disabled', '')
         })
 
@@ -156,8 +216,10 @@ const showUsuariosAsignados = usuarios => {
     }
 
     usuarios.forEach(e => {
-        const {usuario} = e
+        const {usuario, user_id} = e
         const {nombre, apellido} = usuario
+
+        transportistasSeleccionados[user_id] = nombre + ' ' + apellido
 
         const nombreApellido = nombre + ' ' + apellido
 
@@ -167,9 +229,16 @@ const showUsuariosAsignados = usuarios => {
 
         
         btn.setAttribute('type', 'button')
+        btn.setAttribute('id', user_id)
         div.classList.add('d-flex', 'justify-content-between')
         btn.classList.add('btn-close')
         div.classList.add('border', 'rounded', 'p-2')
+
+        btn.addEventListener('click', e => {
+            const id = e.target.id
+            delete transportistasSeleccionados[id]
+            e.target.parentNode.remove()
+        })
 
         div.appendChild(nombreUsuario)
         div.appendChild(btn)
@@ -245,4 +314,10 @@ const getVehiculo = async page => {
 window.addEventListener('DOMContentLoaded', () => {
     getVehiculo()
     .then(() => getTransportistas())
+
+    btnModal.addEventListener('click', mostrarFormulario)
+    formTransportistas.addEventListener('submit', e => {
+        e.preventDefault()
+        enviarFormulario()
+    })
 })
