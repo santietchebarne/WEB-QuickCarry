@@ -6,9 +6,11 @@ const estados = {
 
 const lotesContainer = document.querySelector('#lotes-container')
 const btnsContainer = document.querySelector('#btns-container')
+const btnIniciarViaje = document.querySelector('#iniciar-viaje')
 
 let almacenes = {}
 let usuarios = {}
+let lotesSeleccionados = {}
 
 const mostrarSpinner = () => {
     document.querySelector('[role="lotes"]').classList.remove('d-none')
@@ -16,6 +18,37 @@ const mostrarSpinner = () => {
 
 const ocultarSpinner = () => {
     document.querySelector('[role="lotes"]').classList.add('d-none')
+}
+
+const eliminarAlerta = alerta => {
+    setTimeout(() => {
+        alerta.classList.remove('show')
+    }, 3000)
+}
+
+const mostrarError = () => {
+    const alert = document.createElement('div')
+    alert.classList.add('alert', 'alert-danger', 'alert-dismissible', 'fade', 'show', 'fixed-top', 'mt-5', 'mx-5')
+    alert.innerText = "Selecciona al menos un lote!"
+    document.body.appendChild(alert)
+
+    eliminarAlerta(alert)
+}
+
+const iniciarViaje = () => {
+    const lotes = []
+
+    for (const idLote in lotesSeleccionados) {
+        if(lotesSeleccionados[idLote] == 'checked') {
+            lotes.push(idLote)
+        }
+    }
+
+    if(lotes.length != 0) {
+        console.log(lotes)
+    } else {
+        return mostrarError()
+    }
 }
 
 const getAlmacenes = async () => {
@@ -122,6 +155,8 @@ const showLotes = lotes => {
         const almacenColumna = document.createElement('td')
         const pesoColumna = document.createElement('td')
         const estadoColumna = document.createElement('td')
+        const checkboxColumna = document.createElement('td')
+        const checkbox = document.createElement('input')
         
         const {
             id,
@@ -136,8 +171,28 @@ const showLotes = lotes => {
         const apellidoUsuario = usuarios[creador_id - 1].apellido
 
         const estadoValor = document.createElement('small')
+
+        checkbox.setAttribute('type', 'checkbox')
+        checkbox.setAttribute('id', id)
+
+        if (lotesSeleccionados[id] != 'checked') {
+            lotesSeleccionados[id] = ''
+        } else if (lotesSeleccionados[id] == 'checked') {
+            checkbox.setAttribute('checked', '')
+        }
+
         estadoValor.classList.add(estados[estado], 'text-light', 'p-1', 'rounded', 'fw-bold')
         idColumna.classList.add('fw-bold')
+        checkbox.classList.add('ms-3')
+        
+        checkbox.addEventListener('click', e => {
+            const idCheckbox = e.target.id
+            if(e.target.checked) {
+                lotesSeleccionados[idCheckbox] = 'checked'
+            } else {
+                lotesSeleccionados[idCheckbox] = ''
+            }
+        })
 
         idColumna.innerText = id
         creadorColumna.innerText = nombreUsuario + ' ' + apellidoUsuario
@@ -147,11 +202,14 @@ const showLotes = lotes => {
 
         estadoColumna.appendChild(estadoValor)
 
+        checkboxColumna.appendChild(checkbox)
+
         row.appendChild(idColumna)
         row.appendChild(creadorColumna)
         row.appendChild(almacenColumna)
         row.appendChild(pesoColumna)
         row.appendChild(estadoColumna)
+        row.appendChild(checkboxColumna)
 
         fragment.appendChild(row)
     })
@@ -188,4 +246,8 @@ window.addEventListener('DOMContentLoaded', () => {
     getAlmacenes()
     .then(() => getUsuarios())
     .then(() => getLotes())
+
+    btnIniciarViaje.addEventListener('click', () => {
+        iniciarViaje()
+    })
 })
