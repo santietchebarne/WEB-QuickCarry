@@ -29,7 +29,7 @@ const enviarFormulario = async () => {
         body: JSON.stringify(body)
     })
 
-    if(res.status == '201') {
+    if(res.status == '201' || res.status == '200') {
         const data = await res.json()
         console.log(data)
         location.href = '/html/vehiculo.html'
