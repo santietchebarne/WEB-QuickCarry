@@ -50,29 +50,105 @@
 
     <h1 class="sin-vehiculo mt-5" style="min-height: 700px;">No tienes ningun vehiculo asignado</h1>
 
-    <div class="container-fluid bg-white footer mt-5">
-        <div class="container wow fadeIn" data-wow-delay="0.1s">
-            <div class="copyright">
-                <div class="row">
-                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                        &copy; <a href="#" class="border-bottom" href="#">SER Solutions</a>,
-                        Todos los derechos reservados.
+    <div class="container pt-5 con-viajes d-none">
+        <h2>Viaje asignado</h2>
+        <div class="filters">
+
+            <div style="min-height: 540px;">
+                <table class="table mt-4 position-relative">
+                    <div class="position-absolute top-50 start-50" style="transform: translate(-80px);">
+                        <div class="spinner-border text-muted d-none" role="productos"
+                            style="width: 10rem; height: 10rem;border-width: .75rem;">
+                            <span class="sr-only">Loading...</span>
+                        </div>
                     </div>
-                    <div class="col-md-6 text-center text-md-end">
-                        <div class="footer-menu">
-                            <a href="#">Cambiar idioma</a>
-                            <a class="logout" style="cursor: pointer;">Cerrar sesión</a>
+                    <thead>
+                        <tr>
+                            <th scope="col">Vehículo</th>
+                            <th scope="col">Lote</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col">Fecha de salida</th>
+                        </tr>
+                    </thead>
+                    <tbody id="viaje-sin-empezar-container">
+                    </tbody>
+                </table>
+            </div>
+
+            <form id="iniciar-viaje">
+                <div class="text-end">
+                    <button id="iniciar-lote" class="btn btn-primary mt-3 text-end" type="submit">Iniciar viaje</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+
+    <div class="container pt-5 viaje-iniciado d-none">
+        <h2>Viaje asignado</h2>
+        <a>A medida que llegues a tu destino marca como entregado los productos</a>
+        <div class="filters">
+
+            <div style="min-height: 540px;">
+                <table class="table mt-4 position-relative">
+                    <div class="position-absolute top-50 start-50" style="transform: translate(-80px);">
+                        <div class="spinner-border text-muted d-none" role="productos"
+                            style="width: 10rem; height: 10rem;border-width: .75rem;">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Almacén</th>
+                            <th scope="col">Fecha</th>
+                            <th scope="col">Peso</th>
+                            <th scope="col">Departamento</th>
+                            <th scope="col">Dirección</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col">Añadir</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productos-container">
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="d-flex justify-content-center col" id="btns-container">
+            </div>
+
+            <form id="form-lote">
+                <div class="text-end">
+                    <button id="iniciar-lote" class="btn btn-primary mt-3 text-end" type="submit">Iniciar viaje</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="container-fluid bg-white footer mt-5">
+            <div class="container wow fadeIn" data-wow-delay="0.1s">
+                <div class="copyright">
+                    <div class="row">
+                        <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                            &copy; <a href="#" class="border-bottom" href="#">SER Solutions</a>,
+                            Todos los derechos reservados.
+                        </div>
+                        <div class="col-md-6 text-center text-md-end">
+                            <div class="footer-menu">
+                                <a href="#">Cambiar idioma</a>
+                                <a class="logout" style="cursor: pointer;">Cerrar sesión</a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <script src="/auth.js"></script>
-    <script src="/src/logout.js"></script>
-    <script src="/src/viaje/viaje.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="/auth.js"></script>
+        <script src="/src/logout.js"></script>
+        <script src="/src/viaje/viaje.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 
